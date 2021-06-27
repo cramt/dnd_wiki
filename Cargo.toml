@@ -2,7 +2,13 @@
 name = "dnd_wiki"
 version = "0.1.0"
 authors = ["Alexandra Østermark <alex.cramt@gmail.com>"]
+license = "MIT"
 edition = "2018"
+description = "a tool for creating wikis for dnd 5e"
+homepage = "https://github.com/cramt/dnd_wiki"
+repository = "https://github.com/cramt/dnd_wiki"
+keywords = ["dnd", "wikiw"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
