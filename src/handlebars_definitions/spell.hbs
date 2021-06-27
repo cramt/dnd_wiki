@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../style.css">
+    <title>{{proper_noun name}}</title>
+</head>
+<body>
+<h1 class="spell-name">{{proper_noun name}}</h1>
+<p class="spell-type">{{proper_noun school}} {{spell_level_name spell_level}}</p>
+<p class="spell-property"><span class="spell-property-name">Casting Time:</span> {{casting_time}}</p>
+<p class="spell-property"><span class="spell-property-name">Range:</span> {{this.range}}</p>
+<p class="spell-property"><span class="spell-property-name">Components:</span> {{components}}</p>
+<p class="spell-property"><span class="spell-property-name">Duration:</span> {{proper_noun duration}}</p>
+<p id="spell-body">{{body}}</p>
+{{#if higher_levels}}
+    <p class="spell-higher-levels"><span>At Higher Levels.</span> {{higher_levels}}</p>
+{{/if}}
+</body>
+</html>

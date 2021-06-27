@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../style.css">
+    <title>{{name}}</title>
+</head>
+<body>
+<h1>{{name}}</h1>
+<p class="flavour-text">{{flavour_text}}</p>
+<p class="multi-class-req">{{multi_class_req_gen multi_class_requirements}}</p>
+<table>
+    <tr>
+        <th>
+            The {{proper_noun name}}
+        </th>
+        {{#if (has_spells this)}}
+            <th>
+                Spell Slots Per Spell Level
+            </th>
+        {{/if}}
+    </tr>
+    <tr>
+        <th>
+            Level
+        </th>
+        <th>
+            Proficiency Bonus
+        </th>
+        <th>
+            Features
+        </th>
+        {{#if (has_cantrips this)}}
+            <th>
+                Cantrips
+                Known
+            </th>
+        {{/if}}
+        {{#if (has_spells this)}}
+            {{#each (range 1 (max_spell_slot @root/this))}}
+                <th>
+                    {{ordinal this}}
+                </th>
+            {{/each}}
+        {{/if}}
+    </tr>
+    {{#each (range 1 20) as |i|}}
+        <tr>
+            <td>{{ordinal i}}</td>
+            <td>+{{prof_bonus i}}</td>
+            <td>{{feature_table_list @root/this i}}</td>
+            {{#if (has_cantrips @root/this)}}
+                <td>{{cantrips_known @root/this i}}</td>
+            {{/if}}
+            {{#if (has_spells @root/this)}}
+                {{#each (range 1 (max_spell_slot @root/this)) as |j|}}
+                    <td>{{spell_slots @root/this i j}}</td>
+                {{/each}}
+            {{/if}}
+        </tr>
+    {{/each}}
+</table>
+<h1>Class Features</h1>
+<p>As a {{lowercase name}} you gain the following class features</p>
+
+<h2>Hit Points</h2>
+<p><b>Hit Die:</b> 1d{{hit_die}} per {{lowercase name}} level</p>
+<p><b>Hit Points at 1st Level:</b> {{hit_die}} + your Constitution modifier</p>
+<p><b>Hit Points at Higher Levels:</b> 1d{{hit_die}} (or {{avg_die hit_die}}) + your Constitution modifier per wizard
+    level after 1st</p>
+
+<h2>Proficiencies</h2>
+<p><b>Armor:</b> {{starting_prof_format starting_prof.armor}}</p>
+<p><b>Weapons:</b> {{starting_prof_format starting_prof.weapons}}</p>
+<p><b>Tools:</b> {{starting_prof_format starting_prof.tools}}</p>
+<p><b>Saving Throws:</b> {{starting_prof_format starting_prof.saving_throws}}</p>
+<p><b>Skills:</b> {{starting_prof_format starting_prof.skills}}</p>
+
+<h2>Equipment</h2>
+You start with the following equipment, in addition to the equipment granted by your background:
+<ul>
+    {{#each equipment}}
+        <li>{{equipment_format this}}</li>
+    {{/each}}
+</ul>
+If you forgo this starting equipment, as well as the items offered by your background, you start with 4d4 x 10 gp to buy
+your equipment.
+
+{{#each features}}
+    <h2>{{this.name}}</h2>
+    <p>{{markdown this.body}}</p>
+    {{#each sections}}
+        <h3>{{this.name}}</h3>
+        <p>{{markdown this.body}}</p>
+        {{#each sections}}
+            <h4>{{this.name}}</h4>
+            <p>{{markdown this.body}}</p>
+            {{#each sections}}
+                <h5>{{this.name}}</h5>
+                <p>{{markdown this.body}}</p>
+                {{#each sections}}
+                    <h6>{{this.name}}</h6>
+                    <p>{{markdown this.body}}</p>
+                {{/each}}
+            {{/each}}
+        {{/each}}
+    {{/each}}
+{{/each}}
+
+</body>
+</html>

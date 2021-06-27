@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../style.css">
+    <title></title>
+</head>
+<body>
+<h1>Spells</h1>
+{{#each (range 9)}}
+    <h2>{{proper_noun (spell_level_name this)}}</h2>
+    <ul>
+        {{#each (sort_spells @root/this this)}}
+            <li><a href="./{{name}}.html">{{proper_noun name}}</a></li>
+        {{/each}}
+    </ul>
+{{/each}}
+</body>
+</html>
