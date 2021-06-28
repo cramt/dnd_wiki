@@ -33,7 +33,7 @@ equipment:
     - arcane focus
   - - scholar's pack
     - explorer's pack
-  - spellbook
+  - - spellbook
 features:
   - name: Spellcasting
     body: As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power.

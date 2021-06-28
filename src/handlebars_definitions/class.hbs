@@ -30,10 +30,14 @@
         <th>
             Features
         </th>
+        {{#each class_resources}}
+            <th>
+                {{@key}}
+            </th>
+        {{/each}}
         {{#if (has_cantrips this)}}
             <th>
-                Cantrips
-                Known
+                Cantrips Known
             </th>
         {{/if}}
         {{#if (has_spells this)}}
@@ -49,6 +53,11 @@
             <td>{{ordinal i}}</td>
             <td>+{{prof_bonus i}}</td>
             <td>{{feature_table_list @root/this i}}</td>
+            {{#each @root/class_resources}}
+                <th>
+                    {{lookup this (to_i (math i "-" 1))}}
+                </th>
+            {{/each}}
             {{#if (has_cantrips @root/this)}}
                 <td>{{cantrips_known @root/this i}}</td>
             {{/if}}

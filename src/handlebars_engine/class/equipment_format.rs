@@ -13,29 +13,9 @@ pub fn equipment_format(
         .ok_or(RenderError::new("param not found"))?
         .value();
 
-    out.write(
-        match (json.as_str(), json.as_array()) {
-            (Some(str), None) => prepend_singular_definite_article(str),
-            (None, Some(arr)) => {
-                let a = arr
-                    .get(0)
-                    .ok_or(RenderError::new("array not of min size 2"))?
-                    .as_str()
-                    .ok_or(RenderError::new("array index 0 not string"))?;
-                let b = arr
-                    .get(1)
-                    .ok_or(RenderError::new("array not of min size 2"))?
-                    .as_str()
-                    .ok_or(RenderError::new("array index 0 not string"))?;
-                format!(
-                    "{} or {}",
-                    prepend_singular_definite_article(a),
-                    prepend_singular_definite_article(b)
-                )
-            }
-            _ => return Err(RenderError::new("not string or array")),
-        }
-        .as_str(),
-    )?;
+    let str: String = json.as_array()
+        .ok_or_else(|| RenderError::new("not array"))?
+        .into_iter().map(|x|x.as_str().unwrap()).map(prepend_singular_definite_article).collect::<Vec<String>>().join(" or ");
+    out.write(str.as_str())?;
     Ok(())
 }

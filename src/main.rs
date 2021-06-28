@@ -1,15 +1,15 @@
-use crate::current_file::{init, dist};
+use crate::current_file::{dist, init};
+use crate::handlebars_engine::build;
 use crate::model::index::Index;
+use crate::text_utils::path_normalize;
 use clap::{AppSettings, Clap};
 use once_cell::sync::Lazy;
 use regex::Regex;
 use std::env::current_dir;
 use std::fs;
-use std::path::PathBuf;
-use crate::handlebars_engine::build;
 use std::fs::File;
 use std::io::Write;
-use crate::text_utils::path_normalize;
+use std::path::PathBuf;
 
 pub mod current_file;
 pub mod handlebars_definitions;
@@ -45,8 +45,8 @@ fn main() {
             false => current_dir().unwrap().join(x),
         },
     }
-        .canonicalize()
-        .unwrap();
+    .canonicalize()
+    .unwrap();
     if path.is_dir() {
         path = path.join("index.yaml")
     }
@@ -57,16 +57,29 @@ fn main() {
     init(path.parent().unwrap());
     let index = serde_yaml::from_reader::<_, Index>(fs::File::open(path.clone()).unwrap()).unwrap();
     let out = dist(opts.out.unwrap_or("dist".to_string()));
-
-    let _ = build(&index).unwrap().into_iter().map(|(path, body)| {
-        let path = path_normalize(out.join(path));
-        fs::create_dir_all(path.parent().unwrap()).unwrap();
-        File::create(path).unwrap().write(body.as_bytes()).unwrap()
-    }).collect::<Vec<usize>>();
+    let _ = build(&index)
+        .unwrap()
+        .into_iter()
+        .map(|(path, body)| {
+            let path = path_normalize(out.join(path));
+            fs::create_dir_all(path.parent().unwrap()).unwrap();
+            File::create(path).unwrap().write(body.as_bytes()).unwrap()
+        })
+        .collect::<Vec<usize>>();
     let mut options = fs_extra::dir::CopyOptions::new();
     options.overwrite = true;
-    fs_extra::dir::copy(path_normalize(path.parent().unwrap().join(index.static_folder)), out.clone(), &options).unwrap();
+    fs_extra::dir::copy(
+        path_normalize(path.parent().unwrap().join(index.static_folder)),
+        out.clone(),
+        &options,
+    )
+    .unwrap();
     let mut options = fs_extra::file::CopyOptions::new();
     options.overwrite = true;
-    fs_extra::file::copy(path_normalize(path.parent().unwrap().join(index.style)), out.join("style.css"), &options).unwrap();
+    fs_extra::file::copy(
+        path_normalize(path.parent().unwrap().join(index.style)),
+        out.join("style.css"),
+        &options,
+    )
+    .unwrap();
 }

@@ -6,7 +6,7 @@ use equipment::Equipment;
 use feature::Feature;
 use multi_class_requirements::MultiClassRequirements;
 use starting_prof::StartingProf;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 pub mod caster_type;
 pub mod equipment;
@@ -25,6 +25,8 @@ pub struct Class {
     pub start_cantrips_known: Option<u8>,
     pub flavour_text: String,
     pub multi_class_requirements: MultiClassRequirements,
+    #[serde(default)]
+    pub class_resources: HashMap<String, [String; 20]>,
     pub hit_die: u8,
     pub starting_prof: StartingProf,
     pub equipment: Equipment,

@@ -16,4 +16,3 @@ pub struct Section {
     #[serde(default)]
     pub sections: Vec<Section>,
 }
-

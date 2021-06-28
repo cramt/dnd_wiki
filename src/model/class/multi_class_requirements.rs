@@ -1,8 +1,8 @@
 use serde::de::{MapAccess, Visitor};
+use serde::ser::SerializeMap;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::Formatter;
 use std::str::FromStr;
-use serde::ser::SerializeMap;
 
 #[derive(Debug)]
 pub enum MulticlassRequirementKey {
@@ -98,16 +98,20 @@ impl<'de> Deserialize<'de> for MultiClassRequirements {
 }
 
 impl Serialize for MultiClassRequirements {
-    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error> where
-        S: Serializer {
+    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error>
+    where
+        S: Serializer,
+    {
         match self {
             MultiClassRequirements::Value(_, _) => unimplemented!(),
-            MultiClassRequirements::And(x) =>  {
+            MultiClassRequirements::And(x) => {
                 let mut map = serializer.serialize_map(Some(x.len()))?;
 
-                for entry in x{
+                for entry in x {
                     match entry {
-                        MultiClassRequirements::Value(a, b) => map.serialize_entry(&a.to_string(), b)?,
+                        MultiClassRequirements::Value(a, b) => {
+                            map.serialize_entry(&a.to_string(), b)?
+                        }
                         MultiClassRequirements::And(_) => unimplemented!(),
                         MultiClassRequirements::Or(_) => unimplemented!(),
                     }

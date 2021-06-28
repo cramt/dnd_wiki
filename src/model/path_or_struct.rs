@@ -1,4 +1,4 @@
-use serde::de::{DeserializeOwned, MapAccess, Visitor, SeqAccess};
+use serde::de::{DeserializeOwned, MapAccess, SeqAccess, Visitor};
 use serde::{de, Deserialize, Deserializer};
 use std::fmt;
 use std::marker::PhantomData;
@@ -28,8 +28,10 @@ where
                 .map_err(|x| de::Error::custom(x.to_string()))
         }
 
-        fn visit_seq<A>(self, seq: A) -> Result<T, A::Error> where
-            A: SeqAccess<'de>, {
+        fn visit_seq<A>(self, seq: A) -> Result<T, A::Error>
+        where
+            A: SeqAccess<'de>,
+        {
             Deserialize::deserialize(de::value::SeqAccessDeserializer::new(seq))
         }
 
@@ -39,8 +41,6 @@ where
         {
             Deserialize::deserialize(de::value::MapAccessDeserializer::new(map))
         }
-
-
     }
 
     deserializer.deserialize_any(PathOrStruct(PhantomData))

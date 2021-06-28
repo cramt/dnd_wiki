@@ -1,7 +1,7 @@
 use serde::de::{Error, MapAccess, SeqAccess, Visitor};
+use serde::ser::{SerializeMap, SerializeSeq};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::Formatter;
-use serde::ser::{SerializeSeq, SerializeMap};
 
 #[derive(Debug)]
 pub enum StartingProfEntry {
@@ -28,22 +28,22 @@ impl<'de> Visitor<'de> for StartingProfEntryVisitor {
     }
 
     fn visit_none<E>(self) -> Result<Self::Value, E>
-        where
-            E: Error,
+    where
+        E: Error,
     {
         Ok(Self::Value::Empty)
     }
 
     fn visit_unit<E>(self) -> Result<Self::Value, E>
-        where
-            E: Error,
+    where
+        E: Error,
     {
         Ok(Self::Value::Empty)
     }
 
     fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, <A as SeqAccess<'de>>::Error>
-        where
-            A: SeqAccess<'de>,
+    where
+        A: SeqAccess<'de>,
     {
         let mut entries = Vec::new();
         let mut anys = 0;
@@ -60,8 +60,8 @@ impl<'de> Visitor<'de> for StartingProfEntryVisitor {
     }
 
     fn visit_map<A>(self, mut map: A) -> Result<Self::Value, <A as MapAccess<'de>>::Error>
-        where
-            A: MapAccess<'de>,
+    where
+        A: MapAccess<'de>,
     {
         let mut amount = None;
         let mut list = None;
@@ -100,16 +100,18 @@ impl<'de> Visitor<'de> for StartingProfEntryVisitor {
 
 impl<'de> Deserialize<'de> for StartingProfEntry {
     fn deserialize<D>(deserializer: D) -> Result<Self, <D as Deserializer<'de>>::Error>
-        where
-            D: Deserializer<'de>,
+    where
+        D: Deserializer<'de>,
     {
         deserializer.deserialize_any(StartingProfEntryVisitor)
     }
 }
 
 impl Serialize for StartingProfEntry {
-    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error> where
-        S: Serializer {
+    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error>
+    where
+        S: Serializer,
+    {
         match self {
             StartingProfEntry::StrictSet(a, b) => {
                 let mut seq = serializer.serialize_seq(Some(a.len() + *b as usize))?;
@@ -133,7 +135,7 @@ impl Serialize for StartingProfEntry {
 
                 map.end()
             }
-            StartingProfEntry::Empty => serializer.serialize_none()
+            StartingProfEntry::Empty => serializer.serialize_none(),
         }
     }
 }

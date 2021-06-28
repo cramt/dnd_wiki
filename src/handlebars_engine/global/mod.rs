@@ -19,4 +19,12 @@ macro_rules! global_engine_gen {
     }
 }
 
-global_engine_gen!(range, proper_noun, spell_level_name, ordinal, prof_bonus);
+global_engine_gen!(
+    range,
+    proper_noun,
+    spell_level_name,
+    ordinal,
+    prof_bonus,
+    math,
+    to_i
+);

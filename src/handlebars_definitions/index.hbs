@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./style.css">
-    <title>{{name}}</title>
 </head>
 <body>
 <a href="./spells/"><h1>Spells</h1></a>
 <h1>Classes</h1>
-{{#each classes}}
-    <a href="./classes/{{name}}.html">{{name}}</a>
+<ul>
+{{#each (sort_classes classes)}}
+    <li><a href="./classes/{{name}}.html">{{proper_noun name}}</a></li>
 {{/each}}
+</ul>
 </body>
 </html>

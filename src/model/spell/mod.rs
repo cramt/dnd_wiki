@@ -1,7 +1,7 @@
 mod components;
 
-use serde::{Deserialize, Serialize};
 use crate::model::spell::components::Components;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Spell {
