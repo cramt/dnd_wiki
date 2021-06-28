@@ -7,9 +7,9 @@ use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct Components {
-    verbal: bool,
-    somatic: bool,
-    material: Option<String>,
+    pub verbal: bool,
+    pub somatic: bool,
+    pub material: Option<String>,
 }
 
 impl FromStr for Components {

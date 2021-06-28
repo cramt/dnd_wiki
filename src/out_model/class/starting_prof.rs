@@ -7,17 +7,11 @@ pub enum StartingProfEntry {
     Empty,
 }
 
-impl Default for StartingProfEntry {
-    fn default() -> Self {
-        StartingProfEntry::Empty
-    }
-}
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct StartingProf {
-    armor: StartingProfEntry,
-    weapons: StartingProfEntry,
-    tools: StartingProfEntry,
-    saving_throws: StartingProfEntry,
-    skills: StartingProfEntry,
+    pub armor: StartingProfEntry,
+    pub weapons: StartingProfEntry,
+    pub tools: StartingProfEntry,
+    pub saving_throws: StartingProfEntry,
+    pub skills: StartingProfEntry,
 }

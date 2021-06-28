@@ -1,4 +1,4 @@
-mod components;
+pub mod components;
 
 use components::Components;
 use serde::{Deserialize, Serialize};

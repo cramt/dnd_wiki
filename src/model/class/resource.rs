@@ -5,7 +5,7 @@ use std::fmt::Formatter;
 use std::mem::MaybeUninit;
 
 #[derive(Debug, Serialize)]
-pub struct Resource([String; 20]);
+pub struct Resource(pub [String; 20]);
 
 #[derive(Debug, Deserialize)]
 struct CalcResource {

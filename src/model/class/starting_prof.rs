@@ -143,13 +143,13 @@ impl Serialize for StartingProfEntry {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct StartingProf {
     #[serde(default)]
-    armor: StartingProfEntry,
+    pub armor: StartingProfEntry,
     #[serde(default)]
-    weapons: StartingProfEntry,
+    pub weapons: StartingProfEntry,
     #[serde(default)]
-    tools: StartingProfEntry,
+    pub tools: StartingProfEntry,
     #[serde(default)]
-    saving_throws: StartingProfEntry,
+    pub saving_throws: StartingProfEntry,
     #[serde(default)]
-    skills: StartingProfEntry,
+    pub skills: StartingProfEntry,
 }

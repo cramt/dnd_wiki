@@ -15,6 +15,7 @@ pub mod handlebars_definitions;
 pub mod handlebars_engine;
 pub mod model;
 pub mod out_model;
+pub mod into_model;
 pub mod text_utils;
 
 #[derive(Clap)]

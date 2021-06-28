@@ -1,4 +1,4 @@
-mod components;
+pub mod components;
 
 use crate::model::spell::components::Components;
 use serde::{Deserialize, Serialize};
