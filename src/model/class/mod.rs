@@ -7,12 +7,14 @@ use feature::Feature;
 use multi_class_requirements::MultiClassRequirements;
 use starting_prof::StartingProf;
 use std::collections::{HashMap, HashSet};
+use resource::Resource;
 
 pub mod caster_type;
 pub mod equipment;
 pub mod feature;
 pub mod multi_class_requirements;
 pub mod starting_prof;
+pub mod resource;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Class {
@@ -26,7 +28,7 @@ pub struct Class {
     pub flavour_text: String,
     pub multi_class_requirements: MultiClassRequirements,
     #[serde(default)]
-    pub class_resources: HashMap<String, [String; 20]>,
+    pub class_resources: HashMap<String, Resource>,
     pub hit_die: u8,
     pub starting_prof: StartingProf,
     pub equipment: Equipment,

@@ -14,3 +14,8 @@ p span {
 .spell-type {
     font-style: italic;
 }
+
+.multi-class-req {
+    font-style: italic;
+    color: grey;
+}
