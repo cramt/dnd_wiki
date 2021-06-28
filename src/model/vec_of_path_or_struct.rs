@@ -4,15 +4,15 @@ use std::fmt;
 use std::marker::PhantomData;
 
 pub fn vec_of_path_or_struct<'de, T, D>(deserializer: D) -> Result<Vec<T>, D::Error>
-    where
-        T: DeserializeOwned,
-        D: Deserializer<'de>,
+where
+    T: DeserializeOwned,
+    D: Deserializer<'de>,
 {
     struct VecOfPathOrStruct<T>(PhantomData<fn() -> T>);
 
     impl<'de, T> Visitor<'de> for VecOfPathOrStruct<T>
-        where
-            T: DeserializeOwned,
+    where
+        T: DeserializeOwned,
     {
         type Value = Vec<T>;
 
@@ -21,10 +21,9 @@ pub fn vec_of_path_or_struct<'de, T, D>(deserializer: D) -> Result<Vec<T>, D::Er
         }
 
         fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, <A as SeqAccess<'de>>::Error>
-            where
-                A: SeqAccess<'de>,
+        where
+            A: SeqAccess<'de>,
         {
-
             enum Entry<K> {
                 Loaded(K),
                 Lazy(String),
@@ -47,10 +46,14 @@ pub fn vec_of_path_or_struct<'de, T, D>(deserializer: D) -> Result<Vec<T>, D::Er
                 }
                 break;
             }
-            Ok(v.into_iter().map(|x| match x {
-                Entry::Loaded(x) => x,
-                Entry::Lazy(str) => serde_yaml::from_reader(crate::current_file::open_new(str)).unwrap()
-            }).collect())
+            Ok(v.into_iter()
+                .map(|x| match x {
+                    Entry::Loaded(x) => x,
+                    Entry::Lazy(str) => {
+                        serde_yaml::from_reader(crate::current_file::open_new(str)).unwrap()
+                    }
+                })
+                .collect())
         }
     }
 

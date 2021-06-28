@@ -12,7 +12,7 @@ use std::marker::PhantomData;
 pub struct Engine<T: Serialize> {
     template_name: &'static str,
     inner: &'static Handlebars<'static>,
-    t: PhantomData<T>
+    t: PhantomData<T>,
 }
 
 impl<T: Serialize> Engine<T> {
@@ -20,7 +20,7 @@ impl<T: Serialize> Engine<T> {
         Self {
             template_name,
             inner,
-            t: PhantomData
+            t: PhantomData,
         }
     }
 }

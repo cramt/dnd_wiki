@@ -1,12 +1,12 @@
+use crate::handlebars_engine as engine;
 use crate::model::class::Class;
 use crate::model::path_or_struct::path_or_struct;
 use crate::model::spell::Spell;
 use crate::model::vec_of_path_or_struct::vec_of_path_or_struct;
 use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
 use std::collections::HashMap;
 use std::error::Error;
-use crate::handlebars_engine as engine;
-use std::borrow::Cow;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Index {
@@ -23,12 +23,21 @@ impl Index {
     pub fn build(&self) -> Result<HashMap<Cow<str>, String>, Box<dyn Error>> {
         let mut map: HashMap<Cow<str>, String> = HashMap::new();
         map.insert("index.html".into(), engine::index::engine().render(&self)?);
-        map.insert("spells/index.html".into(), engine::spells::engine().render(&self.spells)?);
+        map.insert(
+            "spells/index.html".into(),
+            engine::spells::engine().render(&self.spells)?,
+        );
         for spell in &self.spells {
-            map.insert(format!("spells/{}.html", spell.name).into(), engine::spell::engine().render(spell)?);
+            map.insert(
+                format!("spells/{}.html", spell.name).into(),
+                engine::spell::engine().render(spell)?,
+            );
         }
         for class in &self.classes {
-            map.insert(format!("classes/{}.html", class.name).into(), engine::class::engine().render(class)?);
+            map.insert(
+                format!("classes/{}.html", class.name).into(),
+                engine::class::engine().render(class)?,
+            );
         }
         Ok(map)
     }
