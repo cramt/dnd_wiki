@@ -24,3 +24,5 @@ regex = "1.5.4"
 percent-encoding = "2.1.0"
 fs_extra = "1.2.0"
 meval = "0.2"
+
+[workspace]

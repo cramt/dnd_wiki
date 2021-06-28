@@ -1,58 +1,60 @@
-mod class;
-mod global;
-mod index;
-mod spell;
-mod spells;
+pub mod class;
+pub mod global;
+pub mod index;
+pub mod spell;
+pub mod spells;
 
-use crate::model::index::Index;
-use std::collections::HashMap;
-use std::error::Error;
+use handlebars::{Handlebars, RenderError};
+use serde::Serialize;
+use std::marker::PhantomData;
+
+#[derive(Debug)]
+pub struct Engine<T: Serialize> {
+    template_name: &'static str,
+    inner: &'static Handlebars<'static>,
+    t: PhantomData<T>
+}
+
+impl<T: Serialize> Engine<T> {
+    pub fn new(template_name: &'static str, inner: &'static Handlebars<'static>) -> Self {
+        Self {
+            template_name,
+            inner,
+            t: PhantomData
+        }
+    }
+}
+
+impl<T: Serialize> Engine<T> {
+    pub fn render(&self, obj: &T) -> Result<String, RenderError> {
+        self.inner.render_template(self.template_name, obj)
+    }
+}
 
 #[macro_export]
 macro_rules! engine_generator {
-    ($($name:ident),*) => {
+    ($t:ty >> $template:ident >> $($name:ident),*) => {
         use handlebars::Handlebars;
+        use std::ops::Deref;
 
         $(
             mod $name;
         )*
 
-        pub fn new_engine<'reg>() -> Handlebars<'reg> {
+        pub fn engine() -> crate::handlebars_engine::Engine<$t> {
             #[allow(unused_mut)]
-            let mut reg = crate::handlebars_engine::global::global_engine();
-            $(
-                reg.register_helper(
-                    stringify!($name),
-                    Box::new($name::$name),
-                );
-            )*
-            reg
+            static LAZY: once_cell::sync::Lazy<Handlebars<'static>> = once_cell::sync::Lazy::new(|| {
+                let mut reg = crate::handlebars_engine::global::global_engine();
+                reg.register_template(stringify!($template), crate::handlebars_definitions::$template());
+                $(
+                    reg.register_helper(
+                        stringify!($name),
+                        Box::new($name::$name),
+                    );
+                )*
+                reg
+            });
+            crate::handlebars_engine::Engine::new(stringify!($template), LAZY.deref())
         }
     }
-}
-
-pub fn build(index: &Index) -> Result<HashMap<String, String>, Box<dyn Error>> {
-    let mut map = HashMap::new();
-    map.insert(
-        "index.html".to_string(),
-        index::new_engine().render_template(super::handlebars_definitions::index(), &index)?,
-    );
-    map.insert(
-        "spells/index.html".to_string(),
-        spells::new_engine()
-            .render_template(super::handlebars_definitions::spells(), &index.spells)?,
-    );
-    for spell in &index.spells {
-        map.insert(
-            format!("spells/{}.html", spell.name),
-            spell::new_engine().render_template(super::handlebars_definitions::spell(), spell)?,
-        );
-    }
-    for class in &index.classes {
-        map.insert(
-            format!("classes/{}.html", class.name),
-            class::new_engine().render_template(super::handlebars_definitions::class(), class)?,
-        );
-    }
-    Ok(map)
 }

@@ -1,5 +1,4 @@
 use crate::current_file::{dist, init};
-use crate::handlebars_engine::build;
 use crate::model::index::Index;
 use crate::text_utils::path_normalize;
 use clap::{AppSettings, Clap};
@@ -57,11 +56,11 @@ fn main() {
     init(path.parent().unwrap());
     let index = serde_yaml::from_reader::<_, Index>(fs::File::open(path.clone()).unwrap()).unwrap();
     let out = dist(opts.out.unwrap_or("dist".to_string()));
-    let _ = build(&index)
+    let _ = index.build()
         .unwrap()
         .into_iter()
         .map(|(path, body)| {
-            let path = path_normalize(out.join(path));
+            let path = path_normalize(out.join(path.as_ref()));
             fs::create_dir_all(path.parent().unwrap()).unwrap();
             File::create(path).unwrap().write(body.as_bytes()).unwrap()
         })

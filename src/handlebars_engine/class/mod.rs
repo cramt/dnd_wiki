@@ -1,6 +1,9 @@
 use crate::engine_generator;
+use crate::model::class::Class;
 
 engine_generator!(
+    Class >>
+    class >>
     avg_die,
     equipment_format,
     lowercase,

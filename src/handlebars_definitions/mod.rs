@@ -1,15 +1,13 @@
-pub fn class() -> &'static str {
-    include_str!("./class.hbs")
+use handlebars::Template;
+
+macro_rules! template_export {
+    ($($name:ident),*) => {
+        $(
+            pub fn $name() -> Template {
+                Template::compile(include_str!(concat!("./", stringify!($name), ".hbs"))).unwrap()
+            }
+        )*
+    }
 }
 
-pub fn index() -> &'static str {
-    include_str!("./index.hbs")
-}
-
-pub fn spells() -> &'static str {
-    include_str!("./spells.hbs")
-}
-
-pub fn spell() -> &'static str {
-    include_str!("./spell.hbs")
-}
+template_export!(class, index, spells, spell);
