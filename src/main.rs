@@ -13,8 +13,8 @@ use std::path::PathBuf;
 pub mod current_file;
 pub mod handlebars_definitions;
 pub mod handlebars_engine;
-pub mod into_model;
 pub mod in_model;
+pub mod into_model;
 pub mod out_model;
 pub mod text_utils;
 
@@ -58,7 +58,7 @@ fn main() {
     init(path.parent().unwrap());
     let index = serde_yaml::from_reader::<_, Index>(fs::File::open(path.clone()).unwrap()).unwrap();
     let index: crate::out_model::index::Index = index.into();
-    let out = dist(opts.out.unwrap_or("dist".to_string()));
+    let out = dist(opts.out.unwrap_or_else(|| "dist".to_string()));
     let _ = index
         .build()
         .unwrap()
