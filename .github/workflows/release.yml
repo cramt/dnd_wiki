@@ -112,13 +112,13 @@ jobs:
           set -euxo pipefail
           ext=""
           [[ "${{ matrix.name }}" == windows-* ]] && ext=".exe"
-          bin="target/${{ matrix.target }}/release/cargo-watch${ext}"
+          bin="target/${{ matrix.target }}/release/dnd_wiki${ext}"
           version=$(cat VERSION)
-          dst="cargo-watch-v${version}-${{ matrix.target }}"
+          dst="dnd_wiki-v${version}-${{ matrix.target }}"
           mkdir "$dst"
           strip "$bin" || true
           mv "$bin" "$dst/"
-          mv README.md LICENSE completions cargo-watch.1 "$dst/"
+          mv README.md LICENSE completions dnd_wiki.1 "$dst/"
 
       - name: Archive (tar)
         if: '! startsWith(matrix.name, ''windows-'')'
@@ -126,7 +126,7 @@ jobs:
         run: |
           set -euxo pipefail
           version=$(cat VERSION)
-          dst="cargo-watch-v${version}-${{ matrix.target }}"
+          dst="dnd_wiki-v${version}-${{ matrix.target }}"
           tar cavf "$dst.tar.xz" "$dst"
       - name: Archive (deb)
         if: startsWith(matrix.name, 'linux-')
@@ -134,20 +134,20 @@ jobs:
         run: |
           set -euxo pipefail
           version=$(cat VERSION)
-          dst="cargo-watch-v${version}-${{ matrix.target }}"
+          dst="dnd_wiki-v${version}-${{ matrix.target }}"
           mkdir -p "deb/$dst"
           cd "deb/$dst"
           mkdir -p DEBIAN usr/{bin,share/{man/man1,zsh/site-functions}}
-          cp "../../$dst/cargo-watch" usr/bin/
-          cp "../../$dst/cargo-watch.1" usr/share/man/man1/
-          cp "../../$dst/completions/zsh" usr/share/zsh/site-functions/_cargo-watch
+          cp "../../$dst/dnd_wiki" usr/bin/
+          cp "../../$dst/dnd_wiki.1" usr/share/man/man1/
+          cp "../../$dst/completions/zsh" usr/share/zsh/site-functions/_dnd_wiki
           cat <<-CONTROL > DEBIAN/control
-          Package: cargo-watch
+          Package: dnd_wiki
           Version: ${version/v/}
           Architecture: $(echo "${{ matrix.name }}" | cut -d- -f2)
           Maintainer: Félix Saparelli <aur@passcod.name>
           Installed-Size: $(du -d1 usr | tail -n1 | cut -d\t -f1)
-          Homepage: https://github.com/passcod/cargo-watch
+          Homepage: https://github.com/passcod/dnd_wiki
           Description: Watches over your Cargo project's source.
            Cargo Watch watches over your project's source for changes, and runs Cargo commands when they occur.
           CONTROL
@@ -161,7 +161,7 @@ jobs:
         run: |
           set -euxo pipefail
           version=$(cat VERSION)
-          dst="cargo-watch-v${version}-${{ matrix.target }}"
+          dst="dnd_wiki-v${version}-${{ matrix.target }}"
           7z a "$dst.zip" "$dst"
 
       - uses: actions/upload-artifact@v2
@@ -169,9 +169,9 @@ jobs:
           name: builds
           retention-days: 1
           path: |
-            cargo-watch-v*.tar.xz
-            cargo-watch-v*.deb
-            cargo-watch-v*.zip
+            dnd_wiki-v*.tar.xz
+            dnd_wiki-v*.deb
+            dnd_wiki-v*.zip
 
   sign:
     needs: build
@@ -196,10 +196,10 @@ jobs:
           name: builds
 
       - name: Checksums with BLAKE3
-        run: b3sum cargo-watch-v* | tee -a B3SUMS
+        run: b3sum dnd_wiki-v* | tee -a B3SUMS
 
       - name: Checksums with SHA512
-        run: sha512sum cargo-watch-v* | tee -a SHA512SUMS
+        run: sha512sum dnd_wiki-v* | tee -a SHA512SUMS
 
       - name: Sign checksums
         shell: bash
@@ -214,7 +214,7 @@ jobs:
             echo | rsign sign \
               -p .github/workflows/release.pub \
               -s release.key \
-              -t "cargo-watch v$version signed with automated key" \
+              -t "dnd_wiki v$version signed with automated key" \
               -c 'see README.md for signing information' \
               -x "${algo}SUMS.auto.minisig" \
               "${algo}SUMS"
@@ -225,9 +225,9 @@ jobs:
       - uses: softprops/action-gh-release@v1
         with:
           files: |
-            cargo-watch-v*.tar.xz
-            cargo-watch-v*.deb
-            cargo-watch-v*.zip
+            dnd_wiki-v*.tar.xz
+            dnd_wiki-v*.deb
+            dnd_wiki-v*.zip
             *SUMS*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
