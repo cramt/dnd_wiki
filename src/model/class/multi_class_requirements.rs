@@ -1,6 +1,5 @@
 use serde::de::{MapAccess, Visitor};
-use serde::ser::SerializeMap;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Deserializer};
 use std::fmt::Formatter;
 use std::str::FromStr;
 
@@ -33,35 +32,11 @@ impl FromStr for MulticlassRequirementKey {
     }
 }
 
-impl ToString for MulticlassRequirementKey {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Str => "Strength",
-            Self::Dex => "Dexterity",
-            Self::Con => "Constitution",
-            Self::Int => "Intelligence",
-            Self::Wis => "Wisdom",
-            Self::Cha => "Charisma",
-        }
-        .to_string()
-    }
-}
-
 #[derive(Debug)]
 pub enum MultiClassRequirements {
     Value(MulticlassRequirementKey, u8),
     And(Vec<MultiClassRequirements>),
     Or(Vec<MultiClassRequirements>),
-}
-
-impl MultiClassRequirements {
-    pub fn and_vec(self) -> Vec<Self> {
-        match self {
-            Self::Value(a, b) => vec![Self::Value(a, b)],
-            Self::And(v) => v,
-            Self::Or(v) => vec![Self::Or(v)],
-        }
-    }
 }
 
 struct MultiClassRequirementsVisitor;
@@ -94,32 +69,5 @@ impl<'de> Deserialize<'de> for MultiClassRequirements {
         D: Deserializer<'de>,
     {
         deserializer.deserialize_map(MultiClassRequirementsVisitor)
-    }
-}
-
-impl Serialize for MultiClassRequirements {
-    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error>
-    where
-        S: Serializer,
-    {
-        match self {
-            MultiClassRequirements::Value(_, _) => unimplemented!(),
-            MultiClassRequirements::And(x) => {
-                let mut map = serializer.serialize_map(Some(x.len()))?;
-
-                for entry in x {
-                    match entry {
-                        MultiClassRequirements::Value(a, b) => {
-                            map.serialize_entry(&a.to_string(), b)?
-                        }
-                        MultiClassRequirements::And(_) => unimplemented!(),
-                        MultiClassRequirements::Or(_) => unimplemented!(),
-                    }
-                }
-
-                map.end()
-            }
-            MultiClassRequirements::Or(_) => unimplemented!(),
-        }
     }
 }

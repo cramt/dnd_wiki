@@ -10,7 +10,7 @@ impl Into<OutSec> for InSec {
             body,
             sections,
         } = self;
-        let sections = sections.into_iter().map(|f|f.into()).collect();
+        let sections = sections.into_iter().map(|f| f.into()).collect();
         OutSec {
             name,
             body,
@@ -26,7 +26,7 @@ impl Into<InSec> for OutSec {
             body,
             sections,
         } = self;
-        let sections = sections.into_iter().map(|f|f.into()).collect();
+        let sections = sections.into_iter().map(|f| f.into()).collect();
         InSec {
             name,
             body,
@@ -43,7 +43,7 @@ impl Into<In> for Out {
             body,
             sections,
         } = self;
-        let sections = sections.into_iter().map(|f|f.into()).collect();
+        let sections = sections.into_iter().map(|f| f.into()).collect();
         In {
             level,
             name,
@@ -61,7 +61,7 @@ impl Into<Out> for In {
             body,
             sections,
         } = self;
-        let sections = sections.into_iter().map(|f|f.into()).collect();
+        let sections = sections.into_iter().map(|f| f.into()).collect();
         Out {
             level,
             name,
@@ -70,4 +70,3 @@ impl Into<Out> for In {
         }
     }
 }
-

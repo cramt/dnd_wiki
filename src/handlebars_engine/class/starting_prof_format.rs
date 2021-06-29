@@ -1,4 +1,4 @@
-use crate::model::class::starting_prof::StartingProfEntry;
+use crate::out_model::class::starting_prof::StartingProfEntry;
 use crate::text_utils::num_to_word;
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 use serde::de::IntoDeserializer;

@@ -1,6 +1,6 @@
 use handlebars::{RenderError, HelperDef, ScopedJson};
 use serde::de::IntoDeserializer;
-use crate::model::class::Class;
+use crate::out_model::class::Class;
 use serde::Deserialize;
 
 #[allow(non_camel_case_types)]

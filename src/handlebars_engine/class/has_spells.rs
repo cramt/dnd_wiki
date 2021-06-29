@@ -1,8 +1,8 @@
 use handlebars::{RenderError, HelperDef, ScopedJson, JsonValue};
 use serde::de::IntoDeserializer;
-use crate::model::class::Class;
+use crate::out_model::class::Class;
 use serde::Deserialize;
-use crate::model::class::caster_type::CasterType;
+use crate::out_model::class::caster_type::CasterType;
 
 #[allow(non_camel_case_types)]
 pub struct has_spells;

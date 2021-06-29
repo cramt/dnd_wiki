@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 use crate::model::path_or_struct::path_or_struct;
 use caster_type::CasterType;
@@ -16,7 +16,7 @@ pub mod multi_class_requirements;
 pub mod resource;
 pub mod starting_prof;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize)]
 pub struct Class {
     pub name: String,
     pub caster_type: CasterType,

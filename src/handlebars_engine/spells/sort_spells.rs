@@ -1,6 +1,6 @@
 use serde::de::IntoDeserializer;
 use serde::Deserialize;
-use crate::model::spell::Spell;
+use crate::out_model::spell::Spell;
 use handlebars::{HelperDef, RenderError, ScopedJson};
 
 #[allow(non_camel_case_types)]

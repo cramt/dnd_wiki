@@ -1,6 +1,6 @@
 use handlebars::{RenderError, HelperDef, ScopedJson, JsonValue};
 use serde::de::IntoDeserializer;
-use crate::model::class::Class;
+use crate::out_model::class::Class;
 use serde::Deserialize;
 
 

@@ -1,6 +1,6 @@
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 use serde::de::IntoDeserializer;
-use crate::model::class::Class;
+use crate::out_model::class::Class;
 use serde::Deserialize;
 
 pub fn cantrips_known(

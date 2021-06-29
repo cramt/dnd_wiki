@@ -1,4 +1,4 @@
-use crate::model::class::multi_class_requirements::MultiClassRequirements;
+use crate::out_model::class::multi_class_requirements::MultiClassRequirements;
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 use serde::de::IntoDeserializer;
 use serde::Deserialize;
@@ -12,8 +12,7 @@ pub fn multi_class_req_gen(
     out: &mut dyn Output,
 ) -> HelperResult {
     let param = h.param(0).ok_or(RenderError::new("param not found"))?;
-    let req =
-        MultiClassRequirements::deserialize(param.value().clone().into_deserializer())?.and_vec();
+    let req = MultiClassRequirements::deserialize(param.value().clone().into_deserializer())?.and_vec();
 
     out.write(
         format!(

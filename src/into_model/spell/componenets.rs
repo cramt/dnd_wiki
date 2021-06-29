@@ -16,7 +16,6 @@ impl Into<Out> for In {
     }
 }
 
-
 impl Into<In> for Out {
     fn into(self) -> In {
         let Self {

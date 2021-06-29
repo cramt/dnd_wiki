@@ -1,5 +1,5 @@
 use crate::engine_generator;
-use crate::model::class::Class;
+use crate::out_model::class::Class;
 
 engine_generator!(
     Class >> class >> avg_die,
