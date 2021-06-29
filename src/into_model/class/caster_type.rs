@@ -1,9 +1,9 @@
 use crate::in_model::class::caster_type::CasterType as In;
 use crate::out_model::class::caster_type::CasterType as Out;
 
-impl Into<Out> for In {
-    fn into(self) -> Out {
-        match self {
+impl From<In> for Out {
+    fn from(val: In) -> Self {
+        match val {
             In::Full => Out::Full,
             In::Half => Out::Half,
             In::Artificer => Out::Artificer,
@@ -12,9 +12,9 @@ impl Into<Out> for In {
     }
 }
 
-impl Into<In> for Out {
-    fn into(self) -> In {
-        match self {
+impl From<Out> for In {
+    fn from(val: Out) -> Self {
+        match val {
             Out::Full => In::Full,
             Out::Half => In::Full,
             Out::Artificer => In::Full,

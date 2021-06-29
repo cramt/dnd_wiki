@@ -2,20 +2,12 @@ use std::borrow::Cow;
 use std::path::PathBuf;
 
 pub fn is_vowel(c: char) -> bool {
-    match c {
-        'a' => true,
-        'e' => true,
-        'i' => true,
-        'o' => true,
-        'u' => true,
-        'y' => true,
-        _ => false,
-    }
+    matches!(c, 'a' | 'e' | 'i' | 'o' | 'u' | 'y')
 }
 
 pub fn prepend_singular_definite_article<'a, C: Into<Cow<'a, str>>>(c: C) -> String {
     let c = c.into();
-    if let Some(char) = c.as_ref().chars().nth(0) {
+    if let Some(char) = c.as_ref().chars().next() {
         let article = if is_vowel(char) { "an" } else { "a" };
         format!("{} {}", article, c)
     } else {

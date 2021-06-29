@@ -8,9 +8,9 @@ pub mod starting_prof;
 use crate::in_model::class::Class as In;
 use crate::out_model::class::Class as Out;
 
-impl Into<Out> for In {
-    fn into(self) -> Out {
-        let Self {
+impl From<In> for Out {
+    fn from(val: In) -> Self {
+        let In {
             name,
             caster_type,
             spell_list,
@@ -22,7 +22,7 @@ impl Into<Out> for In {
             starting_prof,
             equipment,
             features,
-        } = self;
+        } = val;
         let caster_type = caster_type.into();
         let multi_class_requirements = multi_class_requirements.into();
         let class_resources = class_resources
@@ -48,9 +48,9 @@ impl Into<Out> for In {
     }
 }
 
-impl Into<In> for Out {
-    fn into(self) -> In {
-        let Self {
+impl From<Out> for In {
+    fn from(val: Out) -> Self {
+        let Out {
             name,
             caster_type,
             spell_list,
@@ -62,7 +62,7 @@ impl Into<In> for Out {
             starting_prof,
             equipment,
             features,
-        } = self;
+        } = val;
         let caster_type = caster_type.into();
         let multi_class_requirements = multi_class_requirements.into();
         let class_resources = class_resources

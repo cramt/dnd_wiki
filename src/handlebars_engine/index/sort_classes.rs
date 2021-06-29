@@ -16,7 +16,7 @@ impl HelperDef for sort_classes {
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
         let mut claases = Vec::<Class>::deserialize(h.param(0)
-            .ok_or(RenderError::new("param not found"))?
+            .ok_or_else(||RenderError::new("param not found"))?
             .value()
             .clone()
             .into_deserializer()).map_err(|x| RenderError::new(x.to_string()))?;

@@ -52,7 +52,7 @@ impl<'de> Visitor<'de> for StartingProfEntryVisitor {
             if s == "any" {
                 anys += 1;
             } else {
-                entries.push(s.into())
+                entries.push(s)
             }
         }
 

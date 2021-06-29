@@ -3,13 +3,13 @@ use crate::in_model::class::feature::Section as InSec;
 use crate::out_model::class::feature::Feature as Out;
 use crate::out_model::class::feature::Section as OutSec;
 
-impl Into<OutSec> for InSec {
-    fn into(self) -> OutSec {
+impl From<InSec> for OutSec {
+    fn from(val: InSec) -> Self {
         let InSec {
             name,
             body,
             sections,
-        } = self;
+        } = val;
         let sections = sections.into_iter().map(|f| f.into()).collect();
         OutSec {
             name,
@@ -19,13 +19,13 @@ impl Into<OutSec> for InSec {
     }
 }
 
-impl Into<InSec> for OutSec {
-    fn into(self) -> InSec {
+impl From<OutSec> for InSec {
+    fn from(val: OutSec) -> Self {
         let OutSec {
             name,
             body,
             sections,
-        } = self;
+        } = val;
         let sections = sections.into_iter().map(|f| f.into()).collect();
         InSec {
             name,
@@ -35,14 +35,14 @@ impl Into<InSec> for OutSec {
     }
 }
 
-impl Into<In> for Out {
-    fn into(self) -> In {
+impl From<Out> for In {
+    fn from(val: Out) -> Self {
         let Out {
             name,
             level,
             body,
             sections,
-        } = self;
+        } = val;
         let sections = sections.into_iter().map(|f| f.into()).collect();
         In {
             level,
@@ -53,14 +53,14 @@ impl Into<In> for Out {
     }
 }
 
-impl Into<Out> for In {
-    fn into(self) -> Out {
+impl From<In> for Out {
+    fn from(val: In) -> Self {
         let In {
             name,
             level,
             body,
             sections,
-        } = self;
+        } = val;
         let sections = sections.into_iter().map(|f| f.into()).collect();
         Out {
             level,

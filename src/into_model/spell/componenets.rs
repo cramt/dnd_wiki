@@ -1,13 +1,13 @@
 use crate::in_model::spell::components::Components as In;
 use crate::out_model::spell::components::Components as Out;
 
-impl Into<Out> for In {
-    fn into(self) -> Out {
-        let Self {
+impl From<In> for Out {
+    fn from(val: In) -> Self {
+        let In {
             verbal,
             somatic,
             material,
-        } = self;
+        } = val;
         Out {
             verbal,
             somatic,
@@ -16,13 +16,13 @@ impl Into<Out> for In {
     }
 }
 
-impl Into<In> for Out {
-    fn into(self) -> In {
-        let Self {
+impl From<Out> for In {
+    fn from(val: Out) -> Self {
+        let Out {
             verbal,
             somatic,
             material,
-        } = self;
+        } = val;
         In {
             verbal,
             somatic,

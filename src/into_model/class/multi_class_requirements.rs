@@ -3,9 +3,9 @@ use crate::in_model::class::multi_class_requirements::MulticlassRequirementKey a
 use crate::out_model::class::multi_class_requirements::MultiClassRequirements as Out;
 use crate::out_model::class::multi_class_requirements::MulticlassRequirementKey as OutKey;
 
-impl Into<OutKey> for InKey {
-    fn into(self) -> OutKey {
-        match self {
+impl From<InKey> for OutKey {
+    fn from(val: InKey) -> Self {
+        match val {
             InKey::Str => OutKey::Str,
             InKey::Dex => OutKey::Dex,
             InKey::Con => OutKey::Con,
@@ -16,9 +16,9 @@ impl Into<OutKey> for InKey {
     }
 }
 
-impl Into<InKey> for OutKey {
-    fn into(self) -> InKey {
-        match self {
+impl From<OutKey> for InKey {
+    fn from(val: OutKey) -> Self {
+        match val {
             OutKey::Str => InKey::Str,
             OutKey::Dex => InKey::Dex,
             OutKey::Con => InKey::Con,
@@ -29,9 +29,9 @@ impl Into<InKey> for OutKey {
     }
 }
 
-impl Into<In> for Out {
-    fn into(self) -> In {
-        match self {
+impl From<Out> for In {
+    fn from(val: Out) -> Self {
+        match val {
             Out::Value(a, b) => In::Value(a.into(), b),
             Out::And(b) => In::And(b.into_iter().map(|x| x.into()).collect()),
             Out::Or(b) => In::Or(b.into_iter().map(|x| x.into()).collect()),
@@ -39,9 +39,9 @@ impl Into<In> for Out {
     }
 }
 
-impl Into<Out> for In {
-    fn into(self) -> Out {
-        match self {
+impl From<In> for Out {
+    fn from(val: In) -> Self {
+        match val {
             In::Value(a, b) => Out::Value(a.into(), b),
             In::And(b) => Out::And(b.into_iter().map(|x| x.into()).collect()),
             In::Or(b) => Out::Or(b.into_iter().map(|x| x.into()).collect()),

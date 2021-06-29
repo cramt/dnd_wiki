@@ -2,15 +2,15 @@ use crate::in_model::index::Index as In;
 use crate::out_model;
 use crate::out_model::index::Index as Out;
 
-impl Into<Out> for In {
-    fn into(self) -> Out {
-        let Self {
+impl From<In> for Out {
+    fn from(val: In) -> Self {
+        let In {
             classes,
             spells,
             style,
             static_folder,
             schools,
-        } = self;
+        } = val;
         let classes = classes
             .into_iter()
             .map(|x| x.into())
@@ -40,15 +40,15 @@ impl Into<Out> for In {
     }
 }
 
-impl Into<In> for Out {
-    fn into(self) -> In {
-        let Self {
+impl From<Out> for In {
+    fn from(val: Out) -> Self {
+        let Out {
             classes,
             spells,
             style,
             static_folder,
             schools,
-        } = self;
+        } = val;
         let classes = classes.into_iter().map(|x| x.into()).collect();
         let spells = spells.into_iter().map(|x| x.into()).collect();
         In {
