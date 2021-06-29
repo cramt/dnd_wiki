@@ -1,5 +1,5 @@
 use std::borrow::Cow;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::error::Error;
 
 use crate::handlebars_engine as engine;
@@ -14,6 +14,7 @@ pub struct Index {
     pub style: String,
     #[serde(rename = "static")]
     pub static_folder: String,
+    pub schools: HashSet<String>
 }
 
 impl Index {

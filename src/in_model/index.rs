@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use crate::in_model::class::Class;
 use crate::in_model::path_or_struct::path_or_struct;
 use crate::in_model::spell::Spell;
@@ -13,4 +15,6 @@ pub struct Index {
     pub style: String,
     #[serde(rename = "static")]
     pub static_folder: String,
+    #[serde(deserialize_with = "path_or_struct")]
+    pub schools: HashSet<String>
 }

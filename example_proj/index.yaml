@@ -5,3 +5,4 @@ classes:
 spells: spells.yaml
 static: static
 style: style.css
+schools: schools.yaml

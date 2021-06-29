@@ -9,22 +9,33 @@ impl Into<Out> for In {
             spells,
             style,
             static_folder,
+            schools,
         } = self;
-        let classes = classes.into_iter().map(|x| x.into()).collect::<Vec<out_model::class::Class>>();
-        let spells = spells.into_iter().map(|x|  {
-            let mut x: out_model::spell::Spell = x.into();
-            for class in &classes {
-                if class.spell_list.contains(&x.name) {
-                    x.casters.push(class.name.clone());
+        let classes = classes
+            .into_iter()
+            .map(|x| x.into())
+            .collect::<Vec<out_model::class::Class>>();
+        let spells = spells
+            .into_iter()
+            .map(|x| {
+                let mut x: out_model::spell::Spell = x.into();
+                if !schools.contains(&x.school) {
+                    panic!("school {} does not exist", x.school)
                 }
-            }
-            x
-        }).collect();
+                for class in &classes {
+                    if class.spell_list.contains(&x.name) {
+                        x.casters.push(class.name.clone());
+                    }
+                }
+                x
+            })
+            .collect();
         Out {
             classes,
             spells,
             style,
             static_folder,
+            schools,
         }
     }
 }
@@ -36,6 +47,7 @@ impl Into<In> for Out {
             spells,
             style,
             static_folder,
+            schools,
         } = self;
         let classes = classes.into_iter().map(|x| x.into()).collect();
         let spells = spells.into_iter().map(|x| x.into()).collect();
@@ -44,6 +56,7 @@ impl Into<In> for Out {
             spells,
             style,
             static_folder,
+            schools,
         }
     }
 }
