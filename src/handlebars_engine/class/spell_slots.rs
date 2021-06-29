@@ -15,13 +15,13 @@ pub fn spell_slots(
         .map_err(|x| RenderError::new(x.to_string()))?;
     let class_level = h
         .param(0)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_i64()
         .ok_or_else(|| RenderError::new("not i64"))? as u8;
     let spell_level = h
         .param(1)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_i64()
         .ok_or_else(|| RenderError::new("not i64"))? as u8;

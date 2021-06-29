@@ -9,10 +9,10 @@ pub fn avg_die(
 ) -> HelperResult {
     let n = h
         .param(0)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_u64()
-        .ok_or(RenderError::new("not number"))?;
+        .ok_or_else(|| RenderError::new("not number"))?;
     let n = (n / 2) + 1;
     out.write(n.to_string().as_str())?;
     Ok(())

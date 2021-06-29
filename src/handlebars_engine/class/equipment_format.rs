@@ -10,12 +10,12 @@ pub fn equipment_format(
 ) -> HelperResult {
     let json = h
         .param(0)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(||RenderError::new("param not found"))?
         .value();
 
     let str: String = json.as_array()
         .ok_or_else(|| RenderError::new("not array"))?
-        .into_iter().map(|x|x.as_str().unwrap()).map(prepend_singular_definite_article).collect::<Vec<String>>().join(" or ");
+        .iter().map(|x|x.as_str().unwrap()).map(prepend_singular_definite_article).collect::<Vec<String>>().join(" or ");
     out.write(str.as_str())?;
     Ok(())
 }

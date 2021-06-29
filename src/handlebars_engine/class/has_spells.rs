@@ -16,7 +16,7 @@ impl HelperDef for has_spells {
         ctx: &'rc ::handlebars::Context,
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
-        let class = Class::deserialize(ctx.data().clone().clone().into_deserializer())
+        let class = Class::deserialize(ctx.data().clone().into_deserializer())
             .map_err(|x| RenderError::new(x.to_string()))?;
         Ok(ScopedJson::Derived(JsonValue::Bool(
             class.caster_type != CasterType::None,

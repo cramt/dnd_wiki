@@ -9,10 +9,10 @@ pub fn markdown(
 ) -> HelperResult {
     let str = h
         .param(0)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_str()
-        .ok_or(RenderError::new("param not found"))?;
+        .ok_or_else(|| RenderError::new("param not found"))?;
 
     out.write(
         str.replace("\r\n", "<br>")

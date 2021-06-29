@@ -11,7 +11,7 @@ pub fn multi_class_req_gen(
     _: &mut RenderContext,
     out: &mut dyn Output,
 ) -> HelperResult {
-    let param = h.param(0).ok_or(RenderError::new("param not found"))?;
+    let param = h.param(0).ok_or_else(||RenderError::new("param not found"))?;
     let req = MultiClassRequirements::deserialize(param.value().clone().into_deserializer())?.and_vec();
 
     out.write(
@@ -20,9 +20,7 @@ pub fn multi_class_req_gen(
             req.into_iter()
                 .fold(HashMap::new(), |mut acc, x| match x {
                     MultiClassRequirements::Value(a, b) => {
-                        if !acc.contains_key(&b) {
-                            acc.insert(b, Vec::new());
-                        }
+                        acc.entry(b).or_insert_with(Vec::new);
                         acc.get_mut(&b).unwrap().push(a.to_string());
                         acc
                     }

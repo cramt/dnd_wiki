@@ -9,10 +9,10 @@ pub fn spell_level_name(
 ) -> HelperResult {
     let n = h
         .param(0)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_u64()
-        .ok_or(RenderError::new("param not found"))?;
+        .ok_or_else(|| RenderError::new("param not found"))?;
 
     out.write(
         match n {
@@ -20,8 +20,9 @@ pub fn spell_level_name(
             1 => "1st level".to_string(),
             2 => "2nd level".to_string(),
             3 => "3rd level".to_string(),
-            _x=> format!("{}th level", _x)
-        }.as_str()
+            _x => format!("{}th level", _x),
+        }
+        .as_str(),
     )?;
     Ok(())
 }

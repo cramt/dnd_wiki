@@ -13,7 +13,7 @@ pub enum MulticlassRequirementKey {
     Cha,
 }
 
-const FIELDS: &'static [&'static str] = &["str", "dex", "con", "int", "wis", "cha"];
+const FIELDS: &[&str] = &["str", "dex", "con", "int", "wis", "cha"];
 
 impl FromStr for MulticlassRequirementKey {
     type Err = ();

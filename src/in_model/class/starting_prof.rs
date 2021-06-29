@@ -18,7 +18,7 @@ impl Default for StartingProfEntry {
 
 struct StartingProfEntryVisitor;
 
-const FIELDS: &'static [&'static str] = &["amount", "list", "any"];
+const FIELDS: &[&str] = &["amount", "list", "any"];
 
 impl<'de> Visitor<'de> for StartingProfEntryVisitor {
     type Value = StartingProfEntry;

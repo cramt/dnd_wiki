@@ -9,10 +9,10 @@ pub fn lowercase(
 ) -> HelperResult {
     out.write(
         h.param(0)
-            .ok_or(RenderError::new("param not found"))?
+            .ok_or_else(|| RenderError::new("param not found"))?
             .value()
             .as_str()
-            .ok_or(RenderError::new("not string"))?
+            .ok_or_else(|| RenderError::new("not string"))?
             .to_lowercase()
             .as_str(),
     )?;

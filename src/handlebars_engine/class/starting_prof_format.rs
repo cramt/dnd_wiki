@@ -13,7 +13,7 @@ pub fn starting_prof_format(
 ) -> HelperResult {
     let prof = StartingProfEntry::deserialize(
         h.param(0)
-            .ok_or(RenderError::new("param not found"))?
+            .ok_or_else(|| RenderError::new("param not found"))?
             .value()
             .clone()
             .into_deserializer(),

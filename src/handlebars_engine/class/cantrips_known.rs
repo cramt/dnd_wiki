@@ -14,7 +14,7 @@ pub fn cantrips_known(
         .map_err(|x| RenderError::new(x.to_string()))?;
     let level = h
         .param(0)
-        .ok_or(RenderError::new("param not found"))?
+        .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_i64()
         .ok_or_else(|| RenderError::new("not i64"))? as u8;
