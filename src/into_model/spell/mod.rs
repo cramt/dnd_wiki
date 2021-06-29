@@ -1,6 +1,6 @@
 pub mod componenets;
 
-use crate::model::spell::Spell as In;
+use crate::in_model::spell::Spell as In;
 use crate::out_model::spell::Spell as Out;
 
 impl Into<Out> for In {
@@ -29,6 +29,7 @@ impl Into<Out> for In {
             body,
             components,
             higher_levels,
+            casters: Vec::new(),
         }
     }
 }
@@ -46,6 +47,7 @@ impl Into<In> for Out {
             body,
             components,
             higher_levels,
+            ..
         } = self;
         let components = components.into();
         In {

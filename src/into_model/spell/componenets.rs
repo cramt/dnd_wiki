@@ -1,4 +1,4 @@
-use crate::model::spell::components::Components as In;
+use crate::in_model::spell::components::Components as In;
 use crate::out_model::spell::components::Components as Out;
 
 impl Into<Out> for In {

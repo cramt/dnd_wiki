@@ -1,5 +1,5 @@
-use crate::model::class::starting_prof::StartingProf as In;
-use crate::model::class::starting_prof::StartingProfEntry as InEntry;
+use crate::in_model::class::starting_prof::StartingProf as In;
+use crate::in_model::class::starting_prof::StartingProfEntry as InEntry;
 use crate::out_model::class::starting_prof::StartingProf as Out;
 use crate::out_model::class::starting_prof::StartingProfEntry as OutEntry;
 

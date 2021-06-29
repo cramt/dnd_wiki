@@ -15,4 +15,5 @@ pub struct Spell {
     pub body: String,
     pub components: Components,
     pub higher_levels: Option<String>,
+    pub casters: Vec<String>,
 }

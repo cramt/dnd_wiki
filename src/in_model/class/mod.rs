@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-use crate::model::path_or_struct::path_or_struct;
+use crate::in_model::path_or_struct::path_or_struct;
 use caster_type::CasterType;
 use equipment::Equipment;
 use feature::Feature;

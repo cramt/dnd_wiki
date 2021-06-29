@@ -1,7 +1,7 @@
-use crate::model::class::Class;
-use crate::model::path_or_struct::path_or_struct;
-use crate::model::spell::Spell;
-use crate::model::vec_of_path_or_struct::vec_of_path_or_struct;
+use crate::in_model::class::Class;
+use crate::in_model::path_or_struct::path_or_struct;
+use crate::in_model::spell::Spell;
+use crate::in_model::vec_of_path_or_struct::vec_of_path_or_struct;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]

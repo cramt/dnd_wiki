@@ -1,5 +1,5 @@
-use crate::model::class::multi_class_requirements::MultiClassRequirements as In;
-use crate::model::class::multi_class_requirements::MulticlassRequirementKey as InKey;
+use crate::in_model::class::multi_class_requirements::MultiClassRequirements as In;
+use crate::in_model::class::multi_class_requirements::MulticlassRequirementKey as InKey;
 use crate::out_model::class::multi_class_requirements::MultiClassRequirements as Out;
 use crate::out_model::class::multi_class_requirements::MulticlassRequirementKey as OutKey;
 

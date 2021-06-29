@@ -1,4 +1,4 @@
-use crate::model::class::resource::Resource as In;
+use crate::in_model::class::resource::Resource as In;
 use crate::out_model::class::resource::Resource as Out;
 
 impl Into<Out> for In {

@@ -1,4 +1,4 @@
-use crate::model::class::equipment::Equipment as In;
+use crate::in_model::class::equipment::Equipment as In;
 use crate::out_model::class::equipment::Equipment as Out;
 
 impl Into<Out> for In {

@@ -1,4 +1,4 @@
-use crate::model::class::caster_type::CasterType as In;
+use crate::in_model::class::caster_type::CasterType as In;
 use crate::out_model::class::caster_type::CasterType as Out;
 
 impl Into<Out> for In {

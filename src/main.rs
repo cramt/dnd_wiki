@@ -1,5 +1,5 @@
 use crate::current_file::{dist, init};
-use crate::model::index::Index;
+use crate::in_model::index::Index;
 use crate::text_utils::path_normalize;
 use clap::{AppSettings, Clap};
 use once_cell::sync::Lazy;
@@ -14,7 +14,7 @@ pub mod current_file;
 pub mod handlebars_definitions;
 pub mod handlebars_engine;
 pub mod into_model;
-pub mod model;
+pub mod in_model;
 pub mod out_model;
 pub mod text_utils;
 

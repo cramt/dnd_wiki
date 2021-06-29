@@ -5,7 +5,7 @@ pub mod multi_class_requirements;
 pub mod resource;
 pub mod starting_prof;
 
-use crate::model::class::Class as In;
+use crate::in_model::class::Class as In;
 use crate::out_model::class::Class as Out;
 
 impl Into<Out> for In {
