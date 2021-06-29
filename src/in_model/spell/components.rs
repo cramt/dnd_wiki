@@ -1,7 +1,7 @@
 use once_cell::sync::Lazy;
 use regex::Regex;
 use serde::de::{Error, Visitor};
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Deserializer};
 use std::fmt::Formatter;
 use std::str::FromStr;
 
@@ -32,23 +32,6 @@ impl FromStr for Components {
     }
 }
 
-impl ToString for Components {
-    fn to_string(&self) -> String {
-        let mut v = Vec::with_capacity(
-            self.verbal as usize + self.somatic as usize + self.material.is_some() as usize,
-        );
-        if self.verbal {
-            v.push("V".to_string());
-        }
-        if self.somatic {
-            v.push("S".to_string());
-        }
-        if let Some(m) = self.material.as_ref() {
-            v.push(format!("M ({})", m));
-        }
-        v.join(", ")
-    }
-}
 
 struct ComponentsVisitor;
 
@@ -81,14 +64,5 @@ impl<'de> Deserialize<'de> for Components {
         D: Deserializer<'de>,
     {
         deserializer.deserialize_str(ComponentsVisitor)
-    }
-}
-
-impl Serialize for Components {
-    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error>
-    where
-        S: Serializer,
-    {
-        serializer.serialize_str(self.to_string().as_str())
     }
 }

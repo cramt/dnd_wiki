@@ -20,16 +20,19 @@ impl HelperDef for range {
             .ok_or_else(|| RenderError::new("param not u64"))? as u8;
         let b = match h.param(1) {
             None => None,
-            Some(x) => Some(x.value().as_u64().ok_or_else(|| RenderError::new("param not u64"))? as u8)
+            Some(x) => Some(
+                x.value()
+                    .as_u64()
+                    .ok_or_else(|| RenderError::new("param not u64"))? as u8,
+            ),
         };
         let (a, b) = match b {
             None => (0, a),
-            Some(b) => (a, b)
+            Some(b) => (a, b),
         };
         let b = b + 1;
-        let json = serde_json::value::to_value((a..b).into_iter().collect::<Vec<u8>>()).map_err(|x| RenderError::new(x.to_string()))?;
-        Ok(ScopedJson::Derived(
-            json
-        ))
+        let json = serde_json::value::to_value((a..b).into_iter().collect::<Vec<u8>>())
+            .map_err(|x| RenderError::new(x.to_string()))?;
+        Ok(ScopedJson::Derived(json))
     }
 }

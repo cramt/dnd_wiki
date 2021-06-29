@@ -1,16 +1,15 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-<a href="./spells/"><h1>Spells</h1></a>
-<h1>Classes</h1>
-<ul>
-{{#each (sort_classes classes)}}
-    <li><a href="./classes/{{name}}.html">{{proper_noun name}}</a></li>
-{{/each}}
-</ul>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a href="./spells/"><h1>Spells</h1></a>
+    <h1>Classes</h1>
+    <ul>
+      {{#each (sort_classes classes)}}
+        <li><a href="./classes/{{name}}.html">{{proper_noun name}}</a></li>
+      {{/each}}
+    </ul>
+  </body>
 </html>

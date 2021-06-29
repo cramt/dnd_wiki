@@ -27,7 +27,7 @@ impl<T: Serialize> Engine<T> {
 
 impl<T: Serialize> Engine<T> {
     pub fn render(&self, obj: &T) -> Result<String, RenderError> {
-        self.inner.render_template(self.template_name, obj)
+        self.inner.render(self.template_name, obj)
     }
 }
 

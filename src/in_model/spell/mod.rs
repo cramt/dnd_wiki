@@ -1,9 +1,9 @@
 pub mod components;
 
 use crate::in_model::spell::components::Components;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize)]
 pub struct Spell {
     pub name: String,
     #[serde(default)]

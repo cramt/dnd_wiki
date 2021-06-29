@@ -1,27 +1,30 @@
+use crate::out_model::class::caster_type::CasterType;
+use crate::out_model::class::Class;
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 use serde::de::IntoDeserializer;
-use crate::out_model::class::Class;
 use serde::Deserialize;
-use crate::out_model::class::caster_type::CasterType;
 
 pub fn spell_slots(
     h: &Helper,
     _: &Handlebars,
-    _: &Context,
+    ctx: &Context,
     _: &mut RenderContext,
     out: &mut dyn Output,
 ) -> HelperResult {
-    let class = Class::deserialize(h.param(0)
+    let class = Class::deserialize(ctx.data().clone().into_deserializer())
+        .map_err(|x| RenderError::new(x.to_string()))?;
+    let class_level = h
+        .param(0)
         .ok_or(RenderError::new("param not found"))?
         .value()
-        .clone()
-        .into_deserializer()).map_err(|x| RenderError::new(x.to_string()))?;
-    let class_level = h.param(1)
+        .as_i64()
+        .ok_or_else(|| RenderError::new("not i64"))? as u8;
+    let spell_level = h
+        .param(1)
         .ok_or(RenderError::new("param not found"))?
-        .value().as_i64().ok_or_else(|| RenderError::new("not i64"))? as u8;
-    let spell_level = h.param(2)
-        .ok_or(RenderError::new("param not found"))?
-        .value().as_i64().ok_or_else(|| RenderError::new("not i64"))? as u8;
+        .value()
+        .as_i64()
+        .ok_or_else(|| RenderError::new("not i64"))? as u8;
     let slots = match class.caster_type {
         CasterType::Full => match (class_level, spell_level) {
             (1, 1) => 2,
@@ -133,7 +136,7 @@ pub fn spell_slots(
             (20, 8) => 1,
             (20, 9) => 1,
             _ => 0,
-        }
+        },
         CasterType::Half => match (class_level, spell_level) {
             (2, 1) => 2,
             (3, 1) => 3,
@@ -194,8 +197,8 @@ pub fn spell_slots(
             (20, 3) => 3,
             (20, 4) => 3,
             (20, 5) => 2,
-            _ => 0
-        }
+            _ => 0,
+        },
         CasterType::Artificer => match (class_level, spell_level) {
             (1, 1) => 2,
             (2, 1) => 2,
@@ -257,13 +260,13 @@ pub fn spell_slots(
             (20, 3) => 3,
             (20, 4) => 3,
             (20, 5) => 2,
-            _ => 0
-        }
-        CasterType::None => 0
+            _ => 0,
+        },
+        CasterType::None => 0,
     };
     let slots = match slots {
         0 => "-".to_string(),
-        _x => _x.to_string()
+        _x => _x.to_string(),
     };
     out.write(slots.as_str())?;
     Ok(())

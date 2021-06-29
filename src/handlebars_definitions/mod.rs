@@ -4,7 +4,9 @@ macro_rules! template_export {
     ($($name:ident),*) => {
         $(
             pub fn $name() -> Template {
-                Template::compile(include_str!(concat!("./", stringify!($name), ".hbs"))).unwrap()
+                let mut template = Template::compile(include_str!(concat!("./", stringify!($name), ".hbs"))).unwrap();
+                template.name = Some(stringify!($name).into());
+                template
             }
         )*
     }
