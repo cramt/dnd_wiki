@@ -39,24 +39,3 @@ impl From<In> for Out {
         }
     }
 }
-
-impl From<Out> for In {
-    fn from(val: Out) -> Self {
-        let Out {
-            classes,
-            spells,
-            style,
-            static_folder,
-            schools,
-        } = val;
-        let classes = classes.into_iter().map(|x| x.into()).collect();
-        let spells = spells.into_iter().map(|x| x.into()).collect();
-        In {
-            classes,
-            spells,
-            style,
-            static_folder,
-            schools,
-        }
-    }
-}

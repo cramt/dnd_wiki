@@ -32,7 +32,6 @@ impl FromStr for Components {
     }
 }
 
-
 struct ComponentsVisitor;
 
 impl<'de> Visitor<'de> for ComponentsVisitor {

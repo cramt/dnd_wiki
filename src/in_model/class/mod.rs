@@ -9,12 +9,16 @@ use resource::Resource;
 use starting_prof::StartingProf;
 use std::collections::{HashMap, HashSet};
 
+use self::subclasses::Subclasses;
+
 pub mod caster_type;
 pub mod equipment;
 pub mod feature;
 pub mod multi_class_requirements;
 pub mod resource;
 pub mod starting_prof;
+pub mod subclass;
+pub mod subclasses;
 
 #[derive(Debug, Deserialize)]
 pub struct Class {
@@ -32,5 +36,6 @@ pub struct Class {
     pub hit_die: u8,
     pub starting_prof: StartingProf,
     pub equipment: Equipment,
+    pub subclasses: Subclasses,
     pub features: Vec<Feature>,
 }

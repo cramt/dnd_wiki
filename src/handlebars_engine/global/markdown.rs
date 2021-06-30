@@ -1,5 +1,7 @@
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 
+use crate::markdown;
+
 pub fn markdown(
     h: &Helper,
     _: &Handlebars,
@@ -13,12 +15,7 @@ pub fn markdown(
         .value()
         .as_str()
         .ok_or_else(|| RenderError::new("param not found"))?;
-
-    out.write(
-        str.replace("\r\n", "<br>")
-            .replace("\n", "<br>")
-            .replace("\r", "<br>")
-            .as_str(),
-    )?;
+    let str = markdown::markdown(str);
+    out.write(str.as_str())?;
     Ok(())
 }

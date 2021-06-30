@@ -6,9 +6,3 @@ impl From<In> for Out {
         Out(val.0)
     }
 }
-
-impl From<Out> for In {
-    fn from(val: Out) -> Self {
-        In(val.0)
-    }
-}

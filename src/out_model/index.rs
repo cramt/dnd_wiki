@@ -14,7 +14,7 @@ pub struct Index {
     pub style: String,
     #[serde(rename = "static")]
     pub static_folder: String,
-    pub schools: HashSet<String>
+    pub schools: HashSet<String>,
 }
 
 impl Index {

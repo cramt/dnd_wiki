@@ -5,7 +5,7 @@
     <title>{{proper_noun name}}</title>
   </head>
   <body>
-    <h1><a href="./">&#60;&#60;--</a></h1>
+    <h1><a href="./index.html">🠔</a></h1>
     <h1 class="spell-name">{{proper_noun name}}</h1>
     <p class="spell-property"><span class="spell-property-name">Level:</span>
       {{spell_level}}</p>
@@ -31,5 +31,10 @@
       <p class="spell-higher-levels"><span>At Higher Levels.</span>
         {{higher_levels}}</p>
     {{/if}}
+    <p class="spell-lists"><span>Spell Lists:</span>
+      {{#each casters}}
+        <a href="../classes/{{this}}.html">{{proper_noun this}}</a> 
+      {{/each}}
+    </p>
   </body>
 </html>

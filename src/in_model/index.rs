@@ -16,5 +16,5 @@ pub struct Index {
     #[serde(rename = "static")]
     pub static_folder: String,
     #[serde(deserialize_with = "path_or_struct")]
-    pub schools: HashSet<String>
+    pub schools: HashSet<String>,
 }

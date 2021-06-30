@@ -5,7 +5,7 @@
     <title>The {{proper_noun name}}</title>
   </head>
   <body>
-    <h1><a href="../">&#60;--</a></h1>
+    <h1><a href="../">🠔</a></h1>
     <h1>The {{proper_noun name}}</h1>
     <p class="flavour-text">{{flavour_text}}</p>
     <p class="multi-class-req">{{multi_class_req_gen
@@ -110,19 +110,19 @@
     background, you start with 4d4 x 10 gp to buy your equipment.
 
     {{#each features}}
-      <h2 id="feature-{{this.name}}">{{this.name}}</h2>
+      <h2 id="feature-{{this.name}}">{{proper_noun this.name}}</h2>
       <p>{{markdown this.body}}</p>
       {{#each sections}}
-        <h3>{{this.name}}</h3>
+        <h3>{{proper_noun this.name}}</h3>
         <p>{{markdown this.body}}</p>
         {{#each sections}}
-          <h4>{{this.name}}</h4>
+          <h4>{{proper_noun this.name}}</h4>
           <p>{{markdown this.body}}</p>
           {{#each sections}}
-            <h5>{{this.name}}</h5>
+            <h5>{{proper_noun this.name}}</h5>
             <p>{{markdown this.body}}</p>
             {{#each sections}}
-              <h6>{{this.name}}</h6>
+              <h6>{{proper_noun this.name}}</h6>
               <p>{{markdown this.body}}</p>
             {{/each}}
           {{/each}}

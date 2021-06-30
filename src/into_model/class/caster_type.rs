@@ -11,14 +11,3 @@ impl From<In> for Out {
         }
     }
 }
-
-impl From<Out> for In {
-    fn from(val: Out) -> Self {
-        match val {
-            Out::Full => In::Full,
-            Out::Half => In::Full,
-            Out::Artificer => In::Full,
-            Out::None => In::None,
-        }
-    }
-}

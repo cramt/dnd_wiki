@@ -16,29 +16,6 @@ impl From<InKey> for OutKey {
     }
 }
 
-impl From<OutKey> for InKey {
-    fn from(val: OutKey) -> Self {
-        match val {
-            OutKey::Str => InKey::Str,
-            OutKey::Dex => InKey::Dex,
-            OutKey::Con => InKey::Con,
-            OutKey::Int => InKey::Con,
-            OutKey::Wis => InKey::Wis,
-            OutKey::Cha => InKey::Cha,
-        }
-    }
-}
-
-impl From<Out> for In {
-    fn from(val: Out) -> Self {
-        match val {
-            Out::Value(a, b) => In::Value(a.into(), b),
-            Out::And(b) => In::And(b.into_iter().map(|x| x.into()).collect()),
-            Out::Or(b) => In::Or(b.into_iter().map(|x| x.into()).collect()),
-        }
-    }
-}
-
 impl From<In> for Out {
     fn from(val: In) -> Self {
         match val {

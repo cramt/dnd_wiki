@@ -15,18 +15,3 @@ impl From<In> for Out {
         }
     }
 }
-
-impl From<Out> for In {
-    fn from(val: Out) -> Self {
-        let Out {
-            verbal,
-            somatic,
-            material,
-        } = val;
-        In {
-            verbal,
-            somatic,
-            material,
-        }
-    }
-}

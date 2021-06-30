@@ -44,6 +44,18 @@ equipment:
     - dungeoneer's pack
     - explorer's pack
   - - Leather armor, two daggers, and thieves' tools
+subclasses:
+  name: roguish archetype
+  level: 3
+  prefix: 'At 3rd level, you choose an archetype that you emulate in the exercise of your rogue abilities:'
+  postfix: Your archetype choice grants you features at 3rd level and then again at 9th, 13th, and 17th level.
+  entries:
+    - rogue_subclasses/assassin.yaml
+  features:
+    - 3
+    - 9
+    - 13
+    - 17
 features:
   - name: Spellcasting
     body: As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power.

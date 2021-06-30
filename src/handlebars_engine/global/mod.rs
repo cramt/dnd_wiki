@@ -26,5 +26,6 @@ global_engine_gen!(
     ordinal,
     prof_bonus,
     math,
+    markdown,
     to_i
 );

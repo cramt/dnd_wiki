@@ -5,7 +5,6 @@ engine_generator!(
     Class >> class >> avg_die,
     equipment_format,
     lowercase,
-    markdown,
     multi_class_req_gen,
     starting_prof_format,
     has_cantrips,

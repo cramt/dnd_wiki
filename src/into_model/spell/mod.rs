@@ -33,34 +33,3 @@ impl From<In> for Out {
         }
     }
 }
-
-impl From<Out> for In {
-    fn from(val: Out) -> Self {
-        let Out {
-            name,
-            ritual,
-            spell_level,
-            school,
-            casting_time,
-            range,
-            duration,
-            body,
-            components,
-            higher_levels,
-            ..
-        } = val;
-        let components = components.into();
-        In {
-            name,
-            ritual,
-            spell_level,
-            school,
-            casting_time,
-            range,
-            duration,
-            body,
-            components,
-            higher_levels,
-        }
-    }
-}
