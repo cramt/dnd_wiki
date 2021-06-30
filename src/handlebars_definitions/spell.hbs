@@ -5,36 +5,41 @@
     <title>{{proper_noun name}}</title>
   </head>
   <body>
-    <h1><a href="./index.html">🠔</a></h1>
-    <h1 class="spell-name">{{proper_noun name}}</h1>
-    <p class="spell-property"><span class="spell-property-name">Level:</span>
-      {{spell_level}}</p>
-    <p class="spell-property"><span class="spell-property-name">School:</span>
-      {{proper_noun school}}</p>
-    {{#if ritual}}
+    <h1 class="title">Niebs Critial Collection</h1>
+    <div class="container">
+      <h1><a href="./index.html">🠔</a></h1>
+      <h1 class="spell-name">{{proper_noun name}}</h1>
+      <p class="spell-property"><span class="spell-property-name">Level:</span>
+        {{spell_level}}</p>
+      <p class="spell-property"><span class="spell-property-name">School:</span>
+        {{proper_noun school}}</p>
+      {{#if ritual}}
+        <p class="spell-property"><span
+            class="spell-property-name"
+          >Ritual</span></p>
+      {{/if}}
+      <p class="spell-property"><span class="spell-property-name">Casting Time:</span>
+        {{casting_time}}</p>
+      <p class="spell-property"><span class="spell-property-name">Range:</span>
+        {{proper_noun this.range}}</p>
       <p class="spell-property"><span
           class="spell-property-name"
-        >Ritual:</span></p>
-    {{/if}}
-    <p class="spell-property"><span class="spell-property-name">Casting Time:</span>
-      {{casting_time}}</p>
-    <p class="spell-property"><span class="spell-property-name">Range:</span>
-      {{proper_noun this.range}}</p>
-    <p class="spell-property"><span
-        class="spell-property-name"
-      >Components:</span>
-      {{format_componenets components}}</p>
-    <p class="spell-property"><span class="spell-property-name">Duration:</span>
-      {{proper_noun duration}}</p>
-    <p id="spell-body">{{body}}</p>
-    {{#if higher_levels}}
-      <p class="spell-higher-levels"><span>At Higher Levels.</span>
-        {{higher_levels}}</p>
-    {{/if}}
-    <p class="spell-lists"><span>Spell Lists:</span>
-      {{#each casters}}
-        <a href="../classes/{{this}}.html">{{proper_noun this}}</a> 
-      {{/each}}
-    </p>
+        >Components:</span>
+        {{format_componenets components}}</p>
+      <p class="spell-property"><span
+          class="spell-property-name"
+        >Duration:</span>
+        {{proper_noun duration}}</p>
+      <p id="spell-body">{{body}}</p>
+      {{#if higher_levels}}
+        <p class="spell-higher-levels"><span>At Higher Levels.</span>
+          {{higher_levels}}</p>
+      {{/if}}
+      <p class="spell-lists"><span>Spell Lists:</span>
+        {{#each casters}}
+          <a href="../classes/{{this}}.html">{{proper_noun this}}</a>
+        {{/each}}
+      </p>
+    </div>
   </body>
 </html>
