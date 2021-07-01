@@ -23,6 +23,7 @@ pub mod subclasses;
 #[derive(Debug, Deserialize)]
 pub struct Class {
     pub name: String,
+    #[serde(default)]
     pub caster_type: CasterType,
     #[serde(deserialize_with = "path_or_struct")]
     #[serde(default)]

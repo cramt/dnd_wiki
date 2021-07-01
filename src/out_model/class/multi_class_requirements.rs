@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum MulticlassRequirementKey {
     Str,
     Dex,
@@ -20,7 +20,7 @@ impl MultiClassRequirements {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum MultiClassRequirements {
     Value(MulticlassRequirementKey, u8),
     And(Vec<MultiClassRequirements>),

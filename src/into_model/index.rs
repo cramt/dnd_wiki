@@ -10,6 +10,7 @@ impl From<In> for Out {
             style,
             static_folder,
             schools,
+            name,
         } = val;
         let classes = classes
             .into_iter()
@@ -36,6 +37,7 @@ impl From<In> for Out {
             style,
             static_folder,
             schools,
+            name,
         }
     }
 }

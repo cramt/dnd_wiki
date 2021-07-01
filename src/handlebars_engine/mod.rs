@@ -3,6 +3,8 @@ pub mod global;
 pub mod index;
 pub mod spell;
 pub mod spells;
+pub mod deserialize_context;
+pub mod render_err;
 
 use handlebars::{Handlebars, RenderError};
 use serde::Serialize;
@@ -41,7 +43,7 @@ macro_rules! engine_generator {
             mod $name;
         )*
 
-        pub fn engine() -> crate::handlebars_engine::Engine<$t> {
+        pub fn engine() -> crate::handlebars_engine::Engine<crate::out_model::index::MetadataWrapper<$t>> {
             #[allow(unused_mut)]
             static LAZY: once_cell::sync::Lazy<Handlebars<'static>> = once_cell::sync::Lazy::new(|| {
                 let mut reg = crate::handlebars_engine::global::global_engine();

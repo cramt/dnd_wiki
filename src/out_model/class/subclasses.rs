@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use super::subclass::Subclass;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Subclasses {
     pub name: String,
     pub features: Vec<u8>,

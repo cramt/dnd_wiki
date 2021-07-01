@@ -6,5 +6,12 @@ pub enum CasterType {
     Full,
     Half,
     Artificer,
+    Third,
     None,
+}
+
+impl Default for CasterType {
+    fn default() -> Self {
+        Self::None
+    }
 }

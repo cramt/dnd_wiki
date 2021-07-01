@@ -19,7 +19,7 @@ pub mod starting_prof;
 pub mod subclass;
 pub mod subclasses;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Class {
     pub name: String,
     pub caster_type: CasterType,

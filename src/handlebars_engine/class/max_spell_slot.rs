@@ -1,9 +1,6 @@
-use crate::out_model::class::caster_type::CasterType;
+use crate::handlebars_engine::deserialize_context::deserialize_context;
 use crate::out_model::class::Class;
-use handlebars::RenderError;
 use handlebars::{HelperDef, JsonValue, ScopedJson};
-use serde::de::IntoDeserializer;
-use serde::Deserialize;
 use serde_json::Number;
 
 #[allow(non_camel_case_types)]
@@ -18,14 +15,8 @@ impl HelperDef for max_spell_slot {
         ctx: &'rc ::handlebars::Context,
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
-        let class = Class::deserialize(ctx.data().clone().into_deserializer())
-            .map_err(|x| RenderError::new(x.to_string()))?;
-        let slot = match class.caster_type {
-            CasterType::Full => 9,
-            CasterType::Half => 5,
-            CasterType::Artificer => 5,
-            CasterType::None => 0,
-        };
+        let class = deserialize_context::<Class>(ctx)?.inner;
+        let slot = class.caster_type.max_spell_slot();
         Ok(ScopedJson::Derived(JsonValue::Number(Number::from(slot))))
     }
 }

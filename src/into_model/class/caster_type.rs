@@ -8,6 +8,7 @@ impl From<In> for Out {
             In::Half => Out::Half,
             In::Artificer => Out::Artificer,
             In::None => Out::None,
+            In::Third => Out::Thrid
         }
     }
 }

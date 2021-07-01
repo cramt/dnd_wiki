@@ -2,24 +2,24 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="../style.css" />
-    <title>The {{proper_noun name}}</title>
+    <title>The {{proper_noun inner.name}}</title>
   </head>
   <body>
     <h1 class="title">Niebs Critial Collection</h1>
     <div class="container">
       <h1><a href="../">🠔</a></h1>
-      <h1>The {{proper_noun name}}</h1>
-      <p class="flavour-text">{{flavour_text}}</p>
+      <h1>The {{proper_noun inner.name}}</h1>
+      <p class="flavour-text">{{inner.flavour_text}}</p>
       <p class="multi-class-req">{{multi_class_req_gen
-          multi_class_requirements
+          inner.multi_class_requirements
         }}</p>
       <table class="class-table">
         <tr>
           <th class="first-table-header table-header">
             The
-            {{proper_noun name}}
+            {{proper_noun inner.name}}
           </th>
-          {{#if (has_spells this)}}
+          {{#if (has_spells)}}
             <th class="second-table-header table-header">
               Spell Slots Per Spell Level
             </th>
@@ -35,17 +35,17 @@
           <th class="table-header">
             Features
           </th class="table-header">
-          {{#each class_resources}}
+          {{#each inner.class_resources}}
             <th class="table-header">
               {{@key}}
             </th>
           {{/each}}
-          {{#if (has_cantrips this)}}
+          {{#if (has_cantrips)}}
             <th class="table-header">
               Cantrips Known
             </th>
           {{/if}}
-          {{#if (has_spells this)}}
+          {{#if (has_spells)}}
             {{#each (range 1 (max_spell_slot))}}
               <th class="table-header">
                 {{ordinal this}}
@@ -62,7 +62,7 @@
                 <a href="#feature-{{this.name}}">{{this.name}}</a>
               {{/each}}
             </td class="table-entry">
-            {{#each @root.class_resources}}
+            {{#each @root.inner.class_resources}}
               <td class="table-entry">
                 {{lookup this (to_i (math i "-" 1))}}
               </td>
@@ -79,39 +79,39 @@
         {{/each}}
       </table>
       <h1>Class Features</h1>
-      <p>As a {{lowercase name}} you gain the following class features</p>
+      <p>As a {{lowercase inner.name}} you gain the following class features</p>
 
       <h2>Hit Points</h2>
-      <p><b>Hit Die:</b> 1d{{hit_die}} per {{lowercase name}} level</p>
+      <p><b>Hit Die:</b> 1d{{inner.hit_die}} per {{lowercase inner.name}} level</p>
       <p><b>Hit Points at 1st Level:</b>
-        {{hit_die}}
+        {{inner.hit_die}}
         + your Constitution modifier</p>
       <p><b>Hit Points at Higher Levels:</b>
-        1d{{hit_die}}
+        1d{{inner.hit_die}}
         (or
-        {{avg_die hit_die}}) + your Constitution modifier per wizard level after
+        {{avg_die inner.hit_die}}) + your Constitution modifier per wizard level after
         1st</p>
 
       <h2>Proficiencies</h2>
-      <p><b>Armor:</b> {{starting_prof_format starting_prof.armor}}</p>
-      <p><b>Weapons:</b> {{starting_prof_format starting_prof.weapons}}</p>
-      <p><b>Tools:</b> {{starting_prof_format starting_prof.tools}}</p>
+      <p><b>Armor:</b> {{starting_prof_format inner.starting_prof.armor}}</p>
+      <p><b>Weapons:</b> {{starting_prof_format inner.starting_prof.weapons}}</p>
+      <p><b>Tools:</b> {{starting_prof_format inner.starting_prof.tools}}</p>
       <p><b>Saving Throws:</b>
-        {{starting_prof_format starting_prof.saving_throws}}</p>
-      <p><b>Skills:</b> {{starting_prof_format starting_prof.skills}}</p>
+        {{starting_prof_format inner.starting_prof.saving_throws}}</p>
+      <p><b>Skills:</b> {{starting_prof_format inner.starting_prof.skills}}</p>
 
       <h2>Equipment</h2>
       You start with the following equipment, in addition to the equipment
       granted by your background:
       <ul>
-        {{#each equipment}}
+        {{#each inner.equipment}}
           <li>{{equipment_format this}}</li>
         {{/each}}
       </ul>
       If you forgo this starting equipment, as well as the items offered by your
       background, you start with 4d4 x 10 gp to buy your equipment.
 
-      {{#each features}}
+      {{#each inner.features}}
         <h2 id="feature-{{this.name}}">{{proper_noun this.name}}</h2>
         <p>{{markdown this.body}}</p>
         {{#each sections}}

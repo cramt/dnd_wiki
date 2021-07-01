@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Feature {
     pub level: u8,
     pub name: String,
@@ -8,7 +8,7 @@ pub struct Feature {
     pub sections: Vec<Section>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Section {
     pub name: String,
     pub body: String,

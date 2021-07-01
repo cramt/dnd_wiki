@@ -1,7 +1,6 @@
+use crate::handlebars_engine::deserialize_context::deserialize_context;
 use crate::out_model::spell::Spell;
 use handlebars::{HelperDef, RenderError, ScopedJson};
-use serde::de::IntoDeserializer;
-use serde::Deserialize;
 
 #[allow(non_camel_case_types)]
 pub struct sort_spells;
@@ -15,8 +14,7 @@ impl HelperDef for sort_spells {
         ctx: &'rc ::handlebars::Context,
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
-        let spells = Vec::<Spell>::deserialize(ctx.data().clone().into_deserializer())
-            .map_err(|x| RenderError::new(x.to_string()))?;
+        let spells = deserialize_context::<Vec<Spell>>(ctx)?.inner;
         let level = h
             .param(0)
             .ok_or_else(|| RenderError::new("param not found"))?

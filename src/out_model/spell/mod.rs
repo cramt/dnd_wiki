@@ -3,7 +3,7 @@ pub mod components;
 use components::Components;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Spell {
     pub name: String,
     pub ritual: bool,
