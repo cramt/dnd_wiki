@@ -1,10 +1,10 @@
 pub mod class;
+pub mod deserialize_context;
 pub mod global;
 pub mod index;
+pub mod render_err;
 pub mod spell;
 pub mod spells;
-pub mod deserialize_context;
-pub mod render_err;
 
 use handlebars::{Handlebars, RenderError};
 use serde::Serialize;
