@@ -6,7 +6,8 @@ use regex::{Captures, Regex};
 pub fn markdown<'a, S: Into<Cow<'a, str>>>(s: S) -> String {
     static BOLD_ITALIC_REGEX: Lazy<Regex> =
         Lazy::new(|| Regex::new(r"([^\*]|^)(\*+)([^\*]+)(\*+)([^\*]|$)").unwrap());
-    static LIST_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?:(?:\r\n|\r|\n|^)\s*\.\s.*){2,}").unwrap());
+    static LIST_REGEX: Lazy<Regex> =
+        Lazy::new(|| Regex::new(r"(?:(?:\r\n|\r|\n|^)\s*\.\s.*){2,}").unwrap());
     static NEW_LINE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\r\n|\r|\n").unwrap());
 
     let s: Cow<str> = s.into();
@@ -15,7 +16,10 @@ pub fn markdown<'a, S: Into<Cow<'a, str>>>(s: S) -> String {
         static ENTRY_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^.]?\.\s(.*)").unwrap());
         format!(
             r#"<ul class="markdown">{}</ul>"#,
-            ENTRY_REGEX.replace_all(caps.get(0).unwrap().as_str(), r#"<li class="markdown">$1</li>"#)
+            ENTRY_REGEX.replace_all(
+                caps.get(0).unwrap().as_str(),
+                r#"<li class="markdown">$1</li>"#
+            )
         )
     });
     let s = NEW_LINE.replace_all(s.as_ref(), "<br>");
@@ -82,7 +86,7 @@ aaa
         )
         .should()
         .eq(
-            "aaa<ul><li>first thing</li><li>second thing</li><li>third thing</li></ul><br>aaa"
+            "aaa<ul class=\"markdown\"><li class=\"markdown\">first thing</li><li class=\"markdown\">second thing</li><li class=\"markdown\">third thing</li></ul><br>aaa"
                 .to_string(),
         );
     }
@@ -103,7 +107,7 @@ this is awesome
         )
         .should()
         .eq(
-            "hello there<br>aaa<ul><li>first thing</li><li>second thing</li><li>third thing</li></ul><br>aaa<br>this is awesome"
+            "hello there<br>aaa<ul class=\"markdown\"><li class=\"markdown\">first thing</li><li class=\"markdown\">second thing</li><li class=\"markdown\">third thing</li></ul><br>aaa<br>this is awesome"
                 .to_string(),
         );
     }
