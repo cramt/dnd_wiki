@@ -1,0 +1,3 @@
+[submodule "dndncc"]
+	path = dndncc
+	url = https://github.com/cramt/dndncc
