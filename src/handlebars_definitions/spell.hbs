@@ -30,7 +30,7 @@
           class="spell-property-name"
         >Duration:</span>
         {{proper_noun inner.duration}}</p>
-      <p id="spell-body">{{body}}</p>
+      <p id="spell-body">{{markdown inner.body}}</p>
       {{#if inner.higher_levels}}
         <p class="spell-higher-levels"><span>At Higher Levels.</span>
           {{inner.higher_levels}}</p>
