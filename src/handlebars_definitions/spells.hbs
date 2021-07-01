@@ -17,9 +17,9 @@
       <h1>Spells</h1>
       {{#each (range 9)}}
         <h2>{{proper_noun (spell_level_name this)}}</h2>
-        <ul>
+        <ul class="list-by-level">
           {{#each (sort_spells this)}}
-            <li><a href="./{{name}}.html">{{proper_noun name}}</a></li>
+            <li><a href="./{{file_name_sanitize name}}.html">{{proper_noun name}}</a></li>
           {{/each}}
         </ul>
       {{/each}}

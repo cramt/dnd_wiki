@@ -5,6 +5,7 @@ use std::error::Error;
 use crate::handlebars_engine as engine;
 use crate::out_model::class::Class;
 use crate::out_model::spell::Spell;
+use crate::text_utils::file_name_sanitize;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -67,7 +68,7 @@ impl Index {
         );
         for spell in &self.spells {
             map.insert(
-                format!("spells/{}.html", spell.name).into(),
+                format!("spells/{}.html", file_name_sanitize(spell.name.as_str())).into(),
                 engine::spell::engine().render(
                     &Metadata {
                         name: self.name.to_string(),
@@ -80,7 +81,7 @@ impl Index {
         }
         for class in &self.classes {
             map.insert(
-                format!("classes/{}.html", class.name).into(),
+                format!("classes/{}.html", file_name_sanitize(class.name.as_str())).into(),
                 engine::class::engine().render(
                     &Metadata {
                         name: self.name.to_string(),

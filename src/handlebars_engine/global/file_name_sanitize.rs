@@ -1,6 +1,6 @@
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 
-pub fn proper_noun(
+pub fn file_name_sanitize(
     h: &Helper,
     _: &Handlebars,
     _: &Context,
@@ -12,11 +12,8 @@ pub fn proper_noun(
         .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_str()
-        .ok_or_else(|| RenderError::new("not string"))?;
-    let str = str
-        .split_inclusive(&['-', ' ', '/'][..])
-        .map(|x| format!("{}{}", x[0..1].to_uppercase(), &x[1..]))
-        .collect::<String>();
-    out.write(&str)?;
+        .ok_or_else(|| RenderError::new("param not found"))?;
+    let str = crate::text_utils::file_name_sanitize(str);
+    out.write(str.as_str())?;
     Ok(())
 }

@@ -12,7 +12,7 @@ pub fn ordinal(
         .ok_or_else(|| RenderError::new("param not found"))?
         .value()
         .as_i64()
-        .ok_or_else(||RenderError::new("param not found"))?;
+        .ok_or_else(|| RenderError::new("param not found"))?;
 
     out.write(
         match n {

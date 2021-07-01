@@ -1,4 +1,4 @@
-use handlebars::{HelperDef, RenderError, ScopedJson, JsonValue};
+use handlebars::{HelperDef, JsonValue, RenderError, ScopedJson};
 use serde_json::Number;
 
 #[allow(non_camel_case_types)]
@@ -13,9 +13,24 @@ impl HelperDef for math {
         _: &'rc ::handlebars::Context,
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
-        let a = h.param(0).ok_or_else(|| RenderError::new("param not found"))?.value().as_f64().ok_or_else(|| RenderError::new("not f64"))?;
-        let op = h.param(1).ok_or_else(|| RenderError::new("param not found"))?.value().as_str().ok_or_else(|| RenderError::new("not str"))?;
-        let b = h.param(2).ok_or_else(|| RenderError::new("param not found"))?.value().as_f64().ok_or_else(|| RenderError::new("not f64"))?;
+        let a = h
+            .param(0)
+            .ok_or_else(|| RenderError::new("param not found"))?
+            .value()
+            .as_f64()
+            .ok_or_else(|| RenderError::new("not f64"))?;
+        let op = h
+            .param(1)
+            .ok_or_else(|| RenderError::new("param not found"))?
+            .value()
+            .as_str()
+            .ok_or_else(|| RenderError::new("not str"))?;
+        let b = h
+            .param(2)
+            .ok_or_else(|| RenderError::new("param not found"))?
+            .value()
+            .as_f64()
+            .ok_or_else(|| RenderError::new("not f64"))?;
 
         let result = match op {
             "+" => a + b,
@@ -23,11 +38,11 @@ impl HelperDef for math {
             "*" => a * b,
             "/" => a / b,
             "%" => a % a,
-            _ => return Err(RenderError::new("not mathematical operation"))
+            _ => return Err(RenderError::new("not mathematical operation")),
         };
 
-        Ok(ScopedJson::Derived(
-            JsonValue::Number(Number::from_f64(result).unwrap())
-        ))
+        Ok(ScopedJson::Derived(JsonValue::Number(
+            Number::from_f64(result).unwrap(),
+        )))
     }
 }

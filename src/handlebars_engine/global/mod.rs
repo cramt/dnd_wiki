@@ -27,5 +27,6 @@ global_engine_gen!(
     prof_bonus,
     math,
     markdown,
-    to_i
+    to_i,
+    file_name_sanitize
 );

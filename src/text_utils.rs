@@ -1,5 +1,9 @@
 use std::borrow::Cow;
+
 use std::path::PathBuf;
+
+use once_cell::sync::Lazy;
+use regex::Regex;
 
 pub fn is_vowel(c: char) -> bool {
     matches!(c, 'a' | 'e' | 'i' | 'o' | 'u' | 'y')
@@ -31,4 +35,9 @@ pub fn path_normalize(path: PathBuf) -> PathBuf {
 
     let str = path.to_str().unwrap();
     internal(str).into()
+}
+
+pub fn file_name_sanitize<S: AsRef<str>>(s: S) -> String {
+    static REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?:/|<|>|:|"|\\|\||\?|\*)"#).unwrap());
+    REGEX.replace(s.as_ref(), "_").into()
 }
