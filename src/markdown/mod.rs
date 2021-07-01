@@ -6,13 +6,21 @@ use regex::{Captures, Regex};
 pub fn markdown<'a, S: Into<Cow<'a, str>>>(s: S) -> String {
     static BOLD_ITALIC_REGEX: Lazy<Regex> =
         Lazy::new(|| Regex::new(r"([^\*]|^)(\*+)([^\*]+)(\*+)([^\*]|$)").unwrap());
-    let s = s.into();
-    let s = s
-        .replace("\r\n", "<br>")
-        .replace("\n", "<br>")
-        .replace("\r", "<br>");
+    static LIST_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?:(?:[^.]|^)\.\s.*){2,}").unwrap());
+    static NEW_LINE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\r\n|\r|\n").unwrap());
+
+    let s: Cow<str> = s.into();
+    let s = s.trim();
+    let s = LIST_REGEX.replace_all(s.as_ref(), |caps: &Captures| {
+        static ENTRY_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^.]?\.\s(.*)").unwrap());
+        format!(
+            "<ul>{}</ul>",
+            ENTRY_REGEX.replace_all(caps.get(0).unwrap().as_str(), "<li>$1</li>")
+        )
+    });
+    let s = NEW_LINE.replace_all(s.as_ref(), "<br>");
     BOLD_ITALIC_REGEX
-        .replace_all(s.as_str(), |caps: &Captures| {
+        .replace_all(s.as_ref(), |caps: &Captures| {
             let class_name = match (caps[2].len(), caps[4].len()) {
                 (1, 1) => "italic",
                 (2, 2) => "bold",
@@ -58,5 +66,59 @@ mod test {
     #[test]
     fn both() {
         markdown("boring *cool italic* boring **cool bold** boring ***cool both*** boring".to_string()).should().eq("boring <span class=\"italic\">cool italic</span> boring <span class=\"bold\">cool bold</span> boring <span class=\"italic bold\">cool both</span> boring".to_string());
+    }
+
+    #[test]
+    fn list() {
+        markdown(
+            r"
+aaa
+. first thing
+. second thing
+. third thing
+aaa
+        "
+            .to_string(),
+        )
+        .should()
+        .eq(
+            "aaa<ul><li>first thing</li><li>second thing</li><li>third thing</li></ul><br>aaa"
+                .to_string(),
+        );
+    }
+
+    #[test]
+    fn list_more() {
+        markdown(
+            r"
+hello there
+aaa
+. first thing
+. second thing
+. third thing
+aaa
+this is awesome
+        "
+            .to_string(),
+        )
+        .should()
+        .eq(
+            "hello there<br>aaa<ul><li>first thing</li><li>second thing</li><li>third thing</li></ul><br>aaa<br>this is awesome"
+                .to_string(),
+        );
+    }
+
+    #[test]
+    fn newlist() {
+        markdown(
+            r"
+a
+b
+c
+        "
+            .to_string(),
+        )
+        .should()
+        .eq("a<br>b<br>c".to_string());
     }
 }
