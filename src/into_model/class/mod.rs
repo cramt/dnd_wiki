@@ -36,7 +36,7 @@ impl From<In> for Out {
         let equipment = equipment.into();
         let mut features: Vec<crate::out_model::class::feature::Feature> =
             features.into_iter().map(|x| x.into()).collect();
-        let (subclasses, subclass_feature) = subclasses.into();
+        let (subclasses, subclass_feature) = subclasses.out(name.as_str());
         features.push(subclass_feature);
         Out {
             name,

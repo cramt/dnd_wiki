@@ -36,3 +36,8 @@ pub fn list_entry() -> &'static Regex {
     static LIST_ENTRY_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^.]?\.\s(.*)").unwrap());
     LIST_ENTRY_REGEX.deref()
 }
+
+pub fn link() -> &'static Regex {
+    static LINK_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"\[\[([a-zA-Z\.\\]+)\]\]").unwrap());
+    LINK_REGEX.deref()
+}

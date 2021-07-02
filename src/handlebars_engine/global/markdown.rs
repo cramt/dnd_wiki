@@ -1,11 +1,11 @@
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 
-use crate::markdown;
+use crate::{handlebars_engine::deserialize_context::deserialize_metadata, markdown};
 
 pub fn markdown(
     h: &Helper,
     _: &Handlebars,
-    _: &Context,
+    ctx: &Context,
     _: &mut RenderContext,
     out: &mut dyn Output,
 ) -> HelperResult {
@@ -15,7 +15,8 @@ pub fn markdown(
         .value()
         .as_str()
         .ok_or_else(|| RenderError::new("param not found"))?;
-    let str = markdown::markdown(str);
+    let metadata = deserialize_metadata(ctx)?;
+    let str = markdown::markdown(str, &metadata.references);
     out.write(str.as_str())?;
     Ok(())
 }
