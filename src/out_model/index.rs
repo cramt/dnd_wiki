@@ -81,16 +81,38 @@ impl Index {
         }
         for class in &self.classes {
             map.insert(
-                format!("classes/{}.html", file_name_sanitize(class.name.as_str())).into(),
+                format!(
+                    "classes/{}/index.html",
+                    file_name_sanitize(class.name.as_str())
+                )
+                .into(),
                 engine::class::engine().render(
                     &Metadata {
                         name: self.name.to_string(),
-                        path_to_index: "../index.html".to_string(),
-                        path_to_parent: "../index.html".to_string(),
+                        path_to_index: "../../index.html".to_string(),
+                        path_to_parent: "../../index.html".to_string(),
                     }
                     .new_wrapper(class.clone()),
                 )?,
             );
+            for subclass in &class.subclasses.entries {
+                map.insert(
+                    format!(
+                        "classes/{}/{}.html",
+                        file_name_sanitize(class.name.as_str()),
+                        file_name_sanitize(subclass.name.as_str())
+                    )
+                    .into(),
+                    engine::subclass::engine().render(
+                        &Metadata {
+                            name: self.name.to_string(),
+                            path_to_index: "../../index.html".to_string(),
+                            path_to_parent: "../../index.html".to_string(),
+                        }
+                        .new_wrapper(subclass.clone()),
+                    )?,
+                );
+            }
         }
         Ok(map)
     }

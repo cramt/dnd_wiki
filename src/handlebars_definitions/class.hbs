@@ -1,13 +1,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../../style.css" />
     <title>The {{proper_noun inner.name}}</title>
   </head>
   <body>
-    <h1 class="title">Niebs Critial Collection</h1>
+    <h1 class="title"><a href="{{metadata.path_to_index}}">{{metadata.name}}</a></h1>
     <div class="container">
-      <h1><a href="../">🠔</a></h1>
+      <h1><a href="{{metadata.path_to_parent}}">🠔</a></h1>
       <h1>The {{proper_noun inner.name}}</h1>
       <p class="flavour-text">{{inner.flavour_text}}</p>
       <p class="multi-class-req">{{multi_class_req_gen
@@ -67,7 +67,7 @@
                 {{lookup this (to_i (math i "-" 1))}}
               </td>
             {{/each}}
-            {{#if has_cantrips}}
+            {{#if (has_cantrips)}}
               <td class="table-entry">{{cantrips_known i}}</td>
             {{/if}}
             {{#if (has_spells)}}

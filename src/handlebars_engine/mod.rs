@@ -5,6 +5,7 @@ pub mod index;
 pub mod render_err;
 pub mod spell;
 pub mod spells;
+pub mod subclass;
 
 use handlebars::{Handlebars, RenderError};
 use serde::Serialize;

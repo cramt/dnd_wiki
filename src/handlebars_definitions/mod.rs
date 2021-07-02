@@ -12,4 +12,4 @@ macro_rules! template_export {
     }
 }
 
-template_export!(class, index, spells, spell);
+template_export!(class, index, spells, spell, subclass);

@@ -17,7 +17,7 @@ impl HelperDef for has_spells {
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
         let class = deserialize_context::<Class>(ctx)?.inner;
         Ok(ScopedJson::Derived(JsonValue::Bool(
-            class.caster_type != CasterType::None,
+            class.caster_type != CasterType::None
         )))
     }
 }

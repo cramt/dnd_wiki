@@ -1,42 +1,18 @@
+mod list;
+mod new_line;
+mod regexs;
+mod style_formatting;
+
 use std::borrow::Cow;
 
-use once_cell::sync::Lazy;
-use regex::{Captures, Regex};
+use self::{list::list, new_line::new_line, style_formatting::style_formatting};
 
 pub fn markdown<'a, S: Into<Cow<'a, str>>>(s: S) -> String {
-    static BOLD_ITALIC_REGEX: Lazy<Regex> =
-        Lazy::new(|| Regex::new(r"([^\*]|^)(\*+)([^\*]+)(\*+)([^\*]|$)").unwrap());
-    static LIST_REGEX: Lazy<Regex> =
-        Lazy::new(|| Regex::new(r"(?:(?:\r\n|\r|\n|^)\s*\.\s.*){2,}").unwrap());
-    static NEW_LINE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\r\n|\r|\n").unwrap());
-
     let s: Cow<str> = s.into();
     let s = s.trim();
-    let s = LIST_REGEX.replace_all(s.as_ref(), |caps: &Captures| {
-        static ENTRY_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^.]?\.\s(.*)").unwrap());
-        format!(
-            r#"<ul class="markdown">{}</ul>"#,
-            ENTRY_REGEX.replace_all(
-                caps.get(0).unwrap().as_str(),
-                r#"<li class="markdown">$1</li>"#
-            )
-        )
-    });
-    let s = NEW_LINE.replace_all(s.as_ref(), "<br>");
-    BOLD_ITALIC_REGEX
-        .replace_all(s.as_ref(), |caps: &Captures| {
-            let class_name = match (caps[2].len(), caps[4].len()) {
-                (1, 1) => "italic",
-                (2, 2) => "bold",
-                (3, 3) => "italic bold",
-                (_a, _b) => panic!("markdown syntax between {}, has {} * on the left side and {} * on the right side", &caps[3], _a, _b),
-            };
-            format!(
-                r#"{}<span class="{}">{}</span>{}"#,
-                &caps[1], class_name, &caps[3], &caps[5]
-            )
-        })
-        .into()
+    let s = list(s);
+    let s = new_line(s.as_ref());
+    style_formatting(s.as_ref())
 }
 
 #[cfg(test)]

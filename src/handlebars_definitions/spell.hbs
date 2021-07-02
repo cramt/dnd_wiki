@@ -5,35 +5,47 @@
     <title>{{proper_noun inner.name}}</title>
   </head>
   <body>
-    <h1 class="title">Niebs Critial Collection</h1>
+    <h1 class="title"><a
+        href="{{metadata.path_to_index}}"
+      >{{metadata.name}}</a></h1>
     <div class="container">
-      <h1><a href="./index.html">🠔</a></h1>
+      <h1><a href="{{metadata.path_to_parent}}">🠔</a></h1>
       <h1 class="spell-name">{{proper_noun inner.name}}</h1>
-      <p class="spell-property"><span class="spell-property-name">Level:</span>
+      <p class="spell-property"><span
+          class="spell-property-name bold"
+        >Level:</span>
         {{inner.spell_level}}</p>
-      <p class="spell-property"><span class="spell-property-name">School:</span>
+      <p class="spell-property"><span
+          class="spell-property-name bold"
+        >School:</span>
         {{proper_noun inner.school}}</p>
       {{#if inner.ritual}}
         <p class="spell-property"><span
-            class="spell-property-name"
+            class="spell-property-name bold"
           >Ritual</span></p>
       {{/if}}
-      <p class="spell-property"><span class="spell-property-name">Casting Time:</span>
+      <p class="spell-property"><span class="spell-property-name bold">Casting
+          Time:</span>
         {{inner.casting_time}}</p>
-      <p class="spell-property"><span class="spell-property-name">Range:</span>
+      <p class="spell-property"><span
+          class="spell-property-name bold"
+        >Range:</span>
         {{proper_noun inner.range}}</p>
       <p class="spell-property"><span
-          class="spell-property-name"
+          class="spell-property-name bold"
         >Components:</span>
         {{format_componenets inner.components}}</p>
       <p class="spell-property"><span
-          class="spell-property-name"
+          class="spell-property-name bold"
         >Duration:</span>
         {{proper_noun inner.duration}}</p>
+      <br />
       <p id="spell-body">{{markdown inner.body}}</p>
+      <br />
       {{#if inner.higher_levels}}
-        <p class="spell-higher-levels"><span>At Higher Levels.</span>
+        <p class="spell-higher-levels"><span class="bold">At Higher Levels.</span>
           {{inner.higher_levels}}</p>
+          <br>
       {{/if}}
       <p class="spell-lists"><span>Spell Lists:</span>
         {{#each inner.casters}}

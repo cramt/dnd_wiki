@@ -1,5 +1,6 @@
 use crate::in_model::class::subclasses::Subclasses as In;
 use crate::out_model::class::feature::Feature;
+use crate::out_model::class::subclass::Subclass;
 use crate::out_model::class::subclasses::Subclasses as Out;
 
 impl From<In> for (Out, Feature) {
@@ -12,19 +13,28 @@ impl From<In> for (Out, Feature) {
             entries,
             features,
         } = val;
-        let entries = entries.into_iter().map(|x| x.into()).collect();
+        let entries: Vec<Subclass> = entries.into_iter().map(|x| x.into()).collect();
+        let f = Feature {
+            name: name.to_string(),
+            level,
+            body: format!(
+                "{}\r\n{}{}",
+                prefix,
+                entries
+                    .iter()
+                    .map(|x| format!(". [[this.{}]]\r\n", x.name))
+                    .collect::<String>(),
+                postfix
+            ),
+            sections: Vec::new(),
+        };
         (
             Out {
-                name: name.to_string(),
+                name,
                 features,
                 entries,
             },
-            Feature {
-                name,
-                level,
-                body: format!("{}\n{}", prefix, postfix),
-                sections: Vec::new(),
-            },
+            f,
         )
     }
 }
