@@ -4,6 +4,7 @@ use std::error::Error;
 
 use crate::handlebars_engine as engine;
 use crate::out_model::class::Class;
+use crate::out_model::crs::Crs;
 use crate::out_model::spell::Spell;
 use crate::text_utils::file_name_sanitize;
 use serde::{Deserialize, Serialize};
@@ -26,7 +27,7 @@ pub struct Metadata {
     pub name: String,
     pub path_to_parent: String,
     pub path_to_index: String,
-    pub references: References,
+    pub references: Crs<References>,
 }
 
 impl Metadata {
@@ -47,12 +48,13 @@ pub struct MetadataWrapper<T> {
 impl Index {
     pub fn build(&self) -> Result<HashMap<Cow<str>, String>, Box<dyn Error>> {
         let references = References::from(self);
+        let r = Crs::new(&references);
         let mut map: HashMap<Cow<str>, String> = HashMap::new();
         map.insert(
             "index.html".into(),
             engine::index::engine().render(
                 &Metadata {
-                    references: references.clone(),
+                    references: r.clone(),
                     name: self.name.to_string(),
                     path_to_index: String::new(),
                     path_to_parent: String::new(),
@@ -64,7 +66,7 @@ impl Index {
             "spells/index.html".into(),
             engine::spells::engine().render(
                 &Metadata {
-                    references: references.clone(),
+                    references: r.clone(),
                     name: self.name.to_string(),
                     path_to_index: "../index.html".to_string(),
                     path_to_parent: "../index.html".to_string(),
@@ -77,7 +79,7 @@ impl Index {
                 format!("spells/{}.html", file_name_sanitize(spell.name.as_str())).into(),
                 engine::spell::engine().render(
                     &Metadata {
-                        references: references.clone(),
+                        references: r.clone(),
                         name: self.name.to_string(),
                         path_to_index: "../index.html".to_string(),
                         path_to_parent: "./index.html".to_string(),
@@ -95,7 +97,7 @@ impl Index {
                 .into(),
                 engine::class::engine().render(
                     &Metadata {
-                        references: references.clone(),
+                        references: r.clone(),
                         name: self.name.to_string(),
                         path_to_index: "../../index.html".to_string(),
                         path_to_parent: "../../index.html".to_string(),
@@ -113,7 +115,7 @@ impl Index {
                     .into(),
                     engine::subclass::engine().render(
                         &Metadata {
-                            references: references.clone(),
+                            references: r.clone(),
                             name: self.name.to_string(),
                             path_to_index: "../../index.html".to_string(),
                             path_to_parent: "../../index.html".to_string(),
