@@ -27,7 +27,7 @@
             checked
           />
           <label for="radio-choice-all-classes">All</label>
-          {{#each (casters)}}
+          {{#each (sort (casters))}}
             <input
               type="radio"
               id="radio-choice-class-{{class_name this}}"
@@ -46,7 +46,7 @@
             checked
           />
           <label for="radio-choice-all-schools">All</label>
-          {{#each metadata.schools}}
+          {{#each (sort metadata.schools)}}
           <input
           type="radio"
           id="radio-choice-school-{{class_name this}}"

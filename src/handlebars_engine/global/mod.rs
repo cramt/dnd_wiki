@@ -30,5 +30,6 @@ global_engine_gen!(
     to_i,
     file_name_sanitize,
     ref_file,
-    class_name
+    class_name,
+    sort
 );

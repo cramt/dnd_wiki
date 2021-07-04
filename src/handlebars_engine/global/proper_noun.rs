@@ -13,10 +13,7 @@ pub fn proper_noun(
         .value()
         .as_str()
         .ok_or_else(|| RenderError::new("not string"))?;
-    let str = str
-        .split_inclusive(&['-', ' ', '/'][..])
-        .map(|x| format!("{}{}", x[0..1].to_uppercase(), &x[1..]))
-        .collect::<String>();
+    let str = crate::text_utils::proper_noun(str);
     out.write(&str)?;
     Ok(())
 }

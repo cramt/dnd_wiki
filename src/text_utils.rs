@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use std::path::PathBuf;
 
 use once_cell::sync::Lazy;
-use regex::Regex;
+use regex::{Captures, Regex};
 
 pub fn is_vowel(c: char) -> bool {
     matches!(c, 'a' | 'e' | 'i' | 'o' | 'u' | 'y')
@@ -45,4 +45,11 @@ pub fn file_name_sanitize<S: AsRef<str>>(s: S) -> String {
 pub fn class_name_sanitize<S: AsRef<str>>(s: S) -> String{
     static REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^a-zA-Z0-9]").unwrap());
     REGEX.replace_all(s.as_ref(), "").into()
+}
+
+pub fn proper_noun<S: AsRef<str>>(s: S) -> String {
+    static REGEX: Lazy<Regex> = Lazy::new(||Regex::new(r"(?:^|[^a-zA-Z1-9])[a-zA-Z1-9]").unwrap());
+    REGEX.replace_all(s.as_ref(), |caps: &Captures| {
+        caps[0].to_uppercase()
+    }).into()
 }
