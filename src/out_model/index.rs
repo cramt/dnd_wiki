@@ -28,9 +28,20 @@ pub struct Metadata {
     pub path_to_parent: String,
     pub path_to_index: String,
     pub references: Crs<References>,
+    pub schools: HashSet<String>,
 }
 
 impl Metadata {
+    pub fn parent<'a, S: Into<Cow<'a, str>>>(mut self, s: S) -> Self {
+        let s: Cow<str> = s.into();
+        self.path_to_parent = s.into_owned();
+        self
+    }
+    pub fn index<'a, S: Into<Cow<'a, str>>>(mut self, s: S) -> Self {
+        let s: Cow<str> = s.into();
+        self.path_to_index = s.into_owned();
+        self
+    }
     pub fn new_wrapper<T>(self, t: T) -> MetadataWrapper<T> {
         MetadataWrapper {
             metadata: self,
@@ -49,42 +60,37 @@ impl Index {
     pub fn build(&self) -> Result<HashMap<Cow<str>, String>, Box<dyn Error>> {
         let references = References::from(self);
         let r = Crs::new(&references);
+        let metadata = Metadata {
+            references: r,
+            name: self.name.to_string(),
+            path_to_index: String::new(),
+            path_to_parent: String::new(),
+            schools: self.schools.clone(),
+        };
         let mut map: HashMap<Cow<str>, String> = HashMap::new();
         map.insert(
             "index.html".into(),
-            engine::index::engine().render(
-                &Metadata {
-                    references: r.clone(),
-                    name: self.name.to_string(),
-                    path_to_index: String::new(),
-                    path_to_parent: String::new(),
-                }
-                .new_wrapper(self.clone()),
-            )?,
+            engine::index::engine().render(&metadata.clone().new_wrapper(self.clone()))?,
         );
         map.insert(
             "spells/index.html".into(),
             engine::spells::engine().render(
-                &Metadata {
-                    references: r.clone(),
-                    name: self.name.to_string(),
-                    path_to_index: "../index.html".to_string(),
-                    path_to_parent: "../index.html".to_string(),
-                }
-                .new_wrapper(self.spells.clone()),
+                &metadata
+                    .clone()
+                    .parent("../")
+                    .index("../")
+                    .new_wrapper(self.spells.clone()),
             )?,
         );
         for spell in &self.spells {
             map.insert(
                 format!("spells/{}.html", file_name_sanitize(spell.name.as_str())).into(),
                 engine::spell::engine().render(
-                    &Metadata {
-                        references: r.clone(),
-                        name: self.name.to_string(),
-                        path_to_index: "../index.html".to_string(),
-                        path_to_parent: "./index.html".to_string(),
-                    }
-                    .new_wrapper(spell.clone()),
+                    &metadata
+                        .clone()
+                        .parent("./index.html")
+                        .index("../index.html")
+                        .new_wrapper(spell.clone()),
                 )?,
             );
         }
@@ -96,13 +102,11 @@ impl Index {
                 )
                 .into(),
                 engine::class::engine().render(
-                    &Metadata {
-                        references: r.clone(),
-                        name: self.name.to_string(),
-                        path_to_index: "../../index.html".to_string(),
-                        path_to_parent: "../../index.html".to_string(),
-                    }
-                    .new_wrapper(class.clone()),
+                    &metadata
+                        .clone()
+                        .parent("../../index.html")
+                        .index("../../index.html")
+                        .new_wrapper(class.clone()),
                 )?,
             );
             for subclass in &class.subclasses.entries {
@@ -114,13 +118,11 @@ impl Index {
                     )
                     .into(),
                     engine::subclass::engine().render(
-                        &Metadata {
-                            references: r.clone(),
-                            name: self.name.to_string(),
-                            path_to_index: "../../index.html".to_string(),
-                            path_to_parent: "../../index.html".to_string(),
-                        }
-                        .new_wrapper(subclass.clone()),
+                        &metadata
+                            .clone()
+                            .parent("../../index.html")
+                            .index("../../index.html")
+                            .new_wrapper(subclass.clone()),
                     )?,
                 );
             }

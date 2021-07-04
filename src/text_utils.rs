@@ -39,5 +39,10 @@ pub fn path_normalize(path: PathBuf) -> PathBuf {
 
 pub fn file_name_sanitize<S: AsRef<str>>(s: S) -> String {
     static REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?:/|<|>|:|"|\\|\||\?|\*)"#).unwrap());
-    REGEX.replace(s.as_ref(), "_").into()
+    REGEX.replace_all(s.as_ref(), "_").into()
+}
+
+pub fn class_name_sanitize<S: AsRef<str>>(s: S) -> String{
+    static REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"[^a-zA-Z0-9]").unwrap());
+    REGEX.replace_all(s.as_ref(), "").into()
 }

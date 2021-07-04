@@ -1,7 +1,7 @@
+use handlebars::Handlebars;
+
 macro_rules! global_engine_gen {
     ($($name:ident),*) => {
-        use handlebars::Handlebars;
-
         $(
             mod $name;
         )*
@@ -28,5 +28,7 @@ global_engine_gen!(
     math,
     markdown,
     to_i,
-    file_name_sanitize
+    file_name_sanitize,
+    ref_file,
+    class_name
 );
