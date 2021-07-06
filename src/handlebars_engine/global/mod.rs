@@ -31,5 +31,8 @@ global_engine_gen!(
     file_name_sanitize,
     ref_file,
     class_name,
-    sort
+    sort,
+    lowercase,
+    avg_die,
+    or
 );

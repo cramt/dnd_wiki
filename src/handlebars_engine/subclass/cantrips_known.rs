@@ -1,4 +1,4 @@
-use crate::out_model::class::Class;
+use crate::out_model::class::subclass::Subclass;
 use crate::{
     handlebars_engine::deserialize_context::deserialize_context,
     out_model::class::generic_class::GenericClass,
@@ -12,7 +12,7 @@ pub fn cantrips_known(
     _: &mut RenderContext,
     out: &mut dyn Output,
 ) -> HelperResult {
-    let class = deserialize_context::<Class>(ctx)?.inner;
+    let class = deserialize_context::<Subclass>(ctx)?.inner;
     let level = h
         .param(0)
         .ok_or_else(|| RenderError::new("param not found"))?

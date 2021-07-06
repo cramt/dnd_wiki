@@ -1,5 +1,5 @@
 use crate::handlebars_engine::deserialize_context::deserialize_context;
-use crate::out_model::class::feature::Feature;
+
 use crate::out_model::class::Class;
 use handlebars::{HelperDef, RenderError, ScopedJson};
 
@@ -22,11 +22,8 @@ impl HelperDef for features_at_level {
             .value()
             .as_i64()
             .ok_or_else(|| RenderError::new("not i64"))? as u8;
-        let features = class
-            .features
-            .into_iter()
-            .filter(|x| x.level == level)
-            .collect::<Vec<Feature>>();
+        let or = Vec::new();
+        let features = class.features.get(&level).unwrap_or(&or);
         let json =
             serde_json::value::to_value(features).map_err(|x| RenderError::new(x.to_string()))?;
         Ok(ScopedJson::Derived(json))

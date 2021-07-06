@@ -2,9 +2,7 @@ use crate::engine_generator;
 use crate::out_model::class::Class;
 
 engine_generator!(
-    Class >> class >> avg_die,
-    equipment_format,
-    lowercase,
+    Class >> class >> equipment_format,
     multi_class_req_gen,
     starting_prof_format,
     has_cantrips,

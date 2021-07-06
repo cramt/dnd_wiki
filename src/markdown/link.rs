@@ -9,7 +9,7 @@ use super::regexs;
 pub fn link<'a, 'b>(s: &'a str, references: &'b References) -> Option<Cow<'a, str>> {
     let mut fail = false;
     let r = regexs::link().replace_all(s, |caps: &Captures| {
-        let mut v = caps[1].split(&['.', '/'][..]);
+        let mut v = caps[1].trim().split(&['.', '/'][..]);
         let mut name = match v.next() {
             Some(x) => x,
             None => {

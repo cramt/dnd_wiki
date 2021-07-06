@@ -61,7 +61,7 @@
               {{#each (features_at_level i)}}
                 <a href="#feature-{{this.name}}">{{this.name}}</a>
               {{/each}}
-            </td class="table-entry">
+            </td>
             {{#each @root.inner.class_resources}}
               <td class="table-entry">
                 {{lookup this (to_i (math i "-" 1))}}
@@ -112,20 +112,22 @@
       background, you start with 4d4 x 10 gp to buy your equipment.
 
       {{#each inner.features}}
-        <h2 id="feature-{{this.name}}">{{proper_noun this.name}}</h2>
-        <p>{{markdown this.body}}</p>
-        {{#each sections}}
-          <h3>{{proper_noun this.name}}</h3>
+        {{#each this}}
+          <h2 id="feature-{{this.name}}">{{proper_noun this.name}}</h2>
           <p>{{markdown this.body}}</p>
           {{#each sections}}
-            <h4>{{proper_noun this.name}}</h4>
+            <h3>{{proper_noun this.name}}</h3>
             <p>{{markdown this.body}}</p>
             {{#each sections}}
-              <h5>{{proper_noun this.name}}</h5>
+              <h4>{{proper_noun this.name}}</h4>
               <p>{{markdown this.body}}</p>
               {{#each sections}}
-                <h6>{{proper_noun this.name}}</h6>
+                <h5>{{proper_noun this.name}}</h5>
                 <p>{{markdown this.body}}</p>
+                {{#each sections}}
+                  <h6>{{proper_noun this.name}}</h6>
+                  <p>{{markdown this.body}}</p>
+                {{/each}}
               {{/each}}
             {{/each}}
           {{/each}}

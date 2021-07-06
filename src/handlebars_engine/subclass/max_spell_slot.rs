@@ -1,14 +1,14 @@
-use crate::out_model::class::Class;
 use crate::{
     handlebars_engine::deserialize_context::deserialize_context,
-    out_model::class::generic_class::GenericClass,
+    out_model::class::subclass::Subclass,
 };
 use handlebars::{HelperDef, JsonValue, ScopedJson};
+use serde_json::Number;
 
 #[allow(non_camel_case_types)]
-pub struct has_spells;
+pub struct max_spell_slot;
 
-impl HelperDef for has_spells {
+impl HelperDef for max_spell_slot {
     #[allow(unused_assignments)]
     fn call_inner<'reg: 'rc, 'rc>(
         &self,
@@ -17,7 +17,8 @@ impl HelperDef for has_spells {
         ctx: &'rc ::handlebars::Context,
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
-        let class = deserialize_context::<Class>(ctx)?.inner;
-        Ok(ScopedJson::Derived(JsonValue::Bool(class.has_spells())))
+        let class = deserialize_context::<Subclass>(ctx)?.inner;
+        let slot = class.caster_type.max_spell_slot();
+        Ok(ScopedJson::Derived(JsonValue::Number(Number::from(slot))))
     }
 }

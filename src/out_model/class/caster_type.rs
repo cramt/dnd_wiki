@@ -5,7 +5,7 @@ pub enum CasterType {
     Full,
     Half,
     Artificer,
-    Thrid,
+    Third,
     None,
 }
 
@@ -248,7 +248,7 @@ impl CasterType {
                 (20, 5) => 2,
                 _ => 0,
             },
-            Self::Thrid => match (class_level, spell_level) {
+            Self::Third => match (class_level, spell_level) {
                 (3, 1) => 2,
                 (4, 1) => 3,
                 (5, 1) => 3,
@@ -274,7 +274,7 @@ impl CasterType {
             CasterType::Full => 9,
             CasterType::Half => 5,
             CasterType::Artificer => 5,
-            CasterType::Thrid => 4,
+            CasterType::Third => 4,
             CasterType::None => 0,
         }
     }

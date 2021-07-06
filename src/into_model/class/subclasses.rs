@@ -13,7 +13,7 @@ impl In {
             entries,
             features,
         } = self;
-        let entries: Vec<Subclass> = entries.into_iter().map(|x| x.into()).collect();
+        let entries: Vec<Subclass> = entries.into_iter().map(|x| (x, level).into()).collect();
         let f = Feature {
             name: name.to_string(),
             level,

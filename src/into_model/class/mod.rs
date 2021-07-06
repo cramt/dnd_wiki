@@ -7,6 +7,8 @@ pub mod starting_prof;
 pub mod subclass;
 pub mod subclasses;
 
+use std::collections::HashMap;
+
 use crate::in_model::class::Class as In;
 use crate::out_model::class::Class as Out;
 
@@ -38,6 +40,13 @@ impl From<In> for Out {
             features.into_iter().map(|x| x.into()).collect();
         let (subclasses, subclass_feature) = subclasses.out(name.as_str());
         features.push(subclass_feature);
+        let features = features.into_iter().fold(HashMap::new(), |mut acc, x| {
+            if !acc.contains_key(&x.level) {
+                acc.insert(x.level, Vec::new());
+            }
+            acc.get_mut(&x.level).unwrap().push(x);
+            acc
+        });
         Out {
             name,
             caster_type,
