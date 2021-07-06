@@ -9,8 +9,8 @@ use super::regexs;
 pub fn link<'a, 'b>(s: &'a str, references: &'b References) -> Option<Cow<'a, str>> {
     let mut fail = false;
     let r = regexs::link().replace_all(s, |caps: &Captures| {
-        let mut v = caps[1].trim().split(&['.', '/'][..]);
-        let mut name = match v.next() {
+        let mut v = caps[2].trim().split(&['.', '/'][..]);
+        let name = match v.next() {
             Some(x) => x,
             None => {
                 fail = true;
@@ -25,7 +25,6 @@ pub fn link<'a, 'b>(s: &'a str, references: &'b References) -> Option<Cow<'a, st
             }
         };
         for s in v {
-            name = s;
             r = match r.children.get(s) {
                 Some(x) => x,
                 None => {
@@ -34,7 +33,7 @@ pub fn link<'a, 'b>(s: &'a str, references: &'b References) -> Option<Cow<'a, st
                 }
             }
         }
-        format!(r#"<a class="markdown" href="./{}">{}</a>"#, r.link, name)
+        format!(r#"<a class="markdown" href="./{}">{}</a>"#, r.link, &caps[1])
     });
     match fail {
         false => Some(r),

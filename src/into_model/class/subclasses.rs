@@ -2,6 +2,7 @@ use crate::in_model::class::subclasses::Subclasses as In;
 use crate::out_model::class::feature::Feature;
 use crate::out_model::class::subclass::Subclass;
 use crate::out_model::class::subclasses::Subclasses as Out;
+use crate::text_utils::proper_noun;
 
 impl In {
     pub fn out(self, class_name: &str) -> (Out, Feature) {
@@ -22,7 +23,7 @@ impl In {
                 prefix,
                 entries
                     .iter()
-                    .map(|x| format!(". [[{}.{}]]\r\n", class_name, x.name))
+                    .map(|x| format!(". [[{}={}.{}]]\r\n", proper_noun(&x.name), class_name, x.name))
                     .collect::<String>(),
                 postfix
             ),
