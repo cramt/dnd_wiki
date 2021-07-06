@@ -9,7 +9,7 @@ license = "MIT"
 name = "dnd_wiki"
 readme = "README.md"
 repository = "https://github.com/cramt/dnd_wiki"
-version = "0.1.7"
+version = "0.1.8"
 
 exclude = ["/.github", "/.idea", "/.vscode"]
 
@@ -30,6 +30,8 @@ serde_json = "1.0"
 serde_yaml = "0.8"
 shoulda = "0.1.9"
 include_dir = "0.6.1"
+crossbeam-channel = "0.5.1"
+notify = "4.0.17"
 
 [workspace]
 
