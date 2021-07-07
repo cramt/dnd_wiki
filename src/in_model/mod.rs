@@ -3,3 +3,4 @@ pub mod index;
 pub mod path_or_struct;
 pub mod spell;
 pub mod vec_of_path_or_struct;
+pub mod featlike;

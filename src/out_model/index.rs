@@ -1,6 +1,7 @@
 use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
+use std::ops::Deref;
 
 use crate::handlebars_engine as engine;
 use crate::out_model::class::Class;
@@ -9,6 +10,7 @@ use crate::out_model::spell::Spell;
 use crate::text_utils::file_name_sanitize;
 use serde::{Deserialize, Serialize};
 
+use super::featlikes::Featlikes;
 use super::references::References;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -20,6 +22,7 @@ pub struct Index {
     pub static_folder: String,
     pub schools: HashSet<String>,
     pub name: String,
+    pub feats: Featlikes,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -41,6 +44,10 @@ impl Metadata {
         let s: Cow<str> = s.into();
         self.path_to_index = s.into_owned();
         self
+    }
+    pub fn index_parent<'a, S: Into<Cow<'a, str>>>(self, s: S) -> Self {
+        let s: Cow<str> = s.into();
+        self.index(s.deref()).parent(s)
     }
     pub fn new_wrapper<T>(self, t: T) -> MetadataWrapper<T> {
         MetadataWrapper {
@@ -73,12 +80,20 @@ impl Index {
             engine::index::engine().render(&metadata.clone().new_wrapper(self.clone()))?,
         );
         map.insert(
+            "feats.html".into(),
+            engine::feats::engine().render(
+                &metadata
+                    .clone()
+                    .index_parent("./index.html")
+                    .new_wrapper(self.feats.clone()),
+            )?,
+        );
+        map.insert(
             "spells/index.html".into(),
             engine::spells::engine().render(
                 &metadata
                     .clone()
-                    .parent("../")
-                    .index("../")
+                    .index_parent("../")
                     .new_wrapper(self.spells.clone()),
             )?,
         );
@@ -104,8 +119,7 @@ impl Index {
                 engine::class::engine().render(
                     &metadata
                         .clone()
-                        .parent("../../index.html")
-                        .index("../../index.html")
+                        .index_parent("../../index.html")
                         .new_wrapper(class.clone()),
                 )?,
             );

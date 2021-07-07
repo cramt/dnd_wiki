@@ -9,7 +9,7 @@ license = "MIT"
 name = "dnd_wiki"
 readme = "README.md"
 repository = "https://github.com/cramt/dnd_wiki"
-version = "0.1.8"
+version = "0.1.9"
 
 exclude = ["/.github", "/.idea", "/.vscode"]
 

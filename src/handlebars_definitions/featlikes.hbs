@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1 class="title"><a
+        href="{{metadata.path_to_index}}"
+      >{{metadata.name}}</a></h1>
+    <div class="container">
+      <h1>{{proper_noun inner.name}}</h1>
+      <button id="open-all">Open All</button>
+      <button id="close-all">Close All</button>
+      {{#each (sort_feats)}}
+        <div class="feat">
+          <h2 class="feat-title">{{proper_noun this.name}}</h2>
+          <div class="feat-contents" style="display: none;">
+          {{#if (has_prerequisites this)}}
+            <p class="bold italic">Prerequisites:
+              {{format_prerequisites this.prerequisites}}</p>
+          {{/if}}
+          <p>{{markdown this.body}}</p>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <script>
+      {{ref_file "js/featlike_filter.js"}}
+    </script>
+  </body>
+</html>

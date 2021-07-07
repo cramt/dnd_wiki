@@ -11,6 +11,7 @@ impl From<In> for Out {
             static_folder,
             schools,
             name,
+            feats,
         } = val;
         let classes = classes
             .into_iter()
@@ -31,6 +32,7 @@ impl From<In> for Out {
                 x
             })
             .collect();
+        let feats = (feats, "feats".to_string()).into();
         Out {
             classes,
             spells,
@@ -38,6 +40,7 @@ impl From<In> for Out {
             static_folder,
             schools,
             name,
+            feats,
         }
     }
 }

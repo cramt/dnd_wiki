@@ -6,6 +6,8 @@ use crate::in_model::spell::Spell;
 use crate::in_model::vec_of_path_or_struct::vec_of_path_or_struct;
 use serde::Deserialize;
 
+use super::featlike::Featlike;
+
 #[derive(Debug, Deserialize)]
 pub struct Index {
     #[serde(deserialize_with = "vec_of_path_or_struct")]
@@ -17,5 +19,7 @@ pub struct Index {
     pub static_folder: String,
     #[serde(deserialize_with = "path_or_struct")]
     pub schools: HashSet<String>,
+    #[serde(deserialize_with = "path_or_struct")]
+    pub feats: Vec<Featlike>,
     pub name: String,
 }
