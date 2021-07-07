@@ -11,7 +11,7 @@ readme = "README.md"
 repository = "https://github.com/cramt/dnd_wiki"
 version = "0.1.9"
 
-exclude = ["/.github", "/.idea", "/.vscode"]
+exclude = ["/.github", "/.idea", "/.vscode", "dndncc"]
 
 [[bin]]
 name = "dnd_wiki"
