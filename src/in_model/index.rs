@@ -7,6 +7,7 @@ use crate::in_model::vec_of_path_or_struct::vec_of_path_or_struct;
 use serde::Deserialize;
 
 use super::featlike::Featlike;
+use super::races::Races;
 
 #[derive(Debug, Deserialize)]
 pub struct Index {
@@ -21,5 +22,7 @@ pub struct Index {
     pub schools: HashSet<String>,
     #[serde(deserialize_with = "path_or_struct")]
     pub feats: Vec<Featlike>,
+    #[serde(deserialize_with = "path_or_struct")]
+    pub races: Races,
     pub name: String,
 }

@@ -7,6 +7,7 @@ pub mod spell;
 pub mod spells;
 pub mod subclass;
 pub mod feats;
+pub mod races;
 
 use handlebars::{Handlebars, RenderError};
 use serde::Serialize;

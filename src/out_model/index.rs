@@ -11,6 +11,7 @@ use crate::{handlebars_definitions, handlebars_engine as engine};
 use serde::{Deserialize, Serialize};
 
 use super::featlikes::Featlikes;
+use super::races::Races;
 use super::references::References;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -23,6 +24,7 @@ pub struct Index {
     pub schools: HashSet<String>,
     pub name: String,
     pub feats: Featlikes,
+    pub races: Races,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -70,8 +72,8 @@ impl Index {
         let metadata = Metadata {
             references: r,
             name: self.name.to_string(),
-            path_to_index: String::new(),
-            path_to_parent: String::new(),
+            path_to_index: "./".into(),
+            path_to_parent: "./index.html".into(),
             schools: self.schools.clone(),
         };
         let mut map: HashMap<Cow<str>, String> = HashMap::new();
@@ -84,7 +86,8 @@ impl Index {
             engine::feats::engine().render(
                 &metadata
                     .clone()
-                    .index_parent("./index.html")
+                    .index("../")
+                    .parent("../index.html")
                     .new_wrapper(self.feats.clone()),
             )?,
         );
@@ -93,20 +96,16 @@ impl Index {
             engine::spells::engine().render(
                 &metadata
                     .clone()
-                    .index_parent("../")
+                    .index("../")
+                    .parent("../index.html")
                     .new_wrapper(self.spells.clone()),
             )?,
         );
         for spell in &self.spells {
             map.insert(
                 format!("spells/{}.html", file_name_sanitize(spell.name.as_str())).into(),
-                engine::spell::engine().render(
-                    &metadata
-                        .clone()
-                        .parent("./index.html")
-                        .index("../index.html")
-                        .new_wrapper(spell.clone()),
-                )?,
+                engine::spell::engine()
+                    .render(&metadata.clone().index("../").new_wrapper(spell.clone()))?,
             );
         }
         for class in &self.classes {
@@ -119,7 +118,8 @@ impl Index {
                 engine::class::engine().render(
                     &metadata
                         .clone()
-                        .index_parent("../../index.html")
+                        .index("../../")
+                        .parent("../../index.html")
                         .new_wrapper(class.clone()),
                 )?,
             );
@@ -135,12 +135,21 @@ impl Index {
                         &metadata
                             .clone()
                             .parent("../../index.html")
-                            .index("../../index.html")
+                            .index("../../")
                             .new_wrapper(subclass.clone()),
                     )?,
                 );
             }
         }
+        map.insert(
+            "races/index.html".into(),
+            engine::races::engine().render(
+                &metadata
+                    .index("../")
+                    .parent("../index.html")
+                    .new_wrapper(self.races.clone()),
+            )?,
+        );
         map.insert("sw.js".into(), handlebars_definitions::sw().to_string());
         Ok(map)
     }

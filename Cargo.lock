@@ -384,6 +384,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "impl-trait-for-tuples"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d5dacb10c5b3bb92d46ba347505a9041e676bb20ad220101326bffb0c93031ee"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "include_dir"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1024,9 +1035,9 @@ dependencies = [
 
 [[package]]
 name = "shoulda"
-version = "0.1.9"
+version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5553b542ecfb6886e8f282ce6513323aea3229873b26adde7aa70c8a2bc032f"
+checksum = "7bcc12600cc93bd99b4a31ae941af867368310e02ecac989f5d1e722c9f89ba7"
 dependencies = [
  "shoulda_core",
  "shoulda_macro",
@@ -1034,19 +1045,20 @@ dependencies = [
 
 [[package]]
 name = "shoulda_core"
-version = "0.1.9"
+version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9ebad703db0e41ac830e57ee050802da75914fa50c9a3f91605764e415f5e6b6"
+checksum = "b1cb43314ef15dc036a6c8c1917fa5152ab7ed424d55194d4c282b1195723d2e"
 dependencies = [
  "const_env",
+ "impl-trait-for-tuples",
  "once_cell",
 ]
 
 [[package]]
 name = "shoulda_macro"
-version = "0.1.9"
+version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf0d10ddb83cdd30750ac6370a32b9cdf61a50eed87be535ebd0758df4f89934"
+checksum = "b9673eaa4cb1232ce59c884660cfc739da6224e697e217be5a30d3579e55938d"
 dependencies = [
  "quote",
  "rustfmt",

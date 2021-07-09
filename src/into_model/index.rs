@@ -12,6 +12,7 @@ impl From<In> for Out {
             schools,
             name,
             feats,
+            races,
         } = val;
         let classes = classes
             .into_iter()
@@ -33,6 +34,7 @@ impl From<In> for Out {
             })
             .collect();
         let feats = (feats, "feats".to_string()).into();
+        let races = races.into();
         Out {
             classes,
             spells,
@@ -41,6 +43,7 @@ impl From<In> for Out {
             schools,
             name,
             feats,
+            races,
         }
     }
 }

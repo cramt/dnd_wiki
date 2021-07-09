@@ -3,12 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="../style.css" />
+    <script>
+      navigator.serviceWorker.register('{{metadata.path_to_index}}sw.js');
+    </script>
     <title>Spells</title>
   </head>
 
   <body>
     <h1 class="title"><a
-        href="{{metadata.path_to_index}}"
+        href="{{metadata.path_to_index}}index.html"
       >{{metadata.name}}</a></h1>
     <div class="container">
       <h1><a href="{{metadata.path_to_parent}}">
