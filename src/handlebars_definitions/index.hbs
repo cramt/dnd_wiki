@@ -2,6 +2,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./style.css" />
+    <script>
+      navigator.serviceWorker.register('./sw.js');
+    </script>
   </head>
   <body>
     <h1 class="title">{{metadata.name}}</h1>
@@ -10,7 +13,9 @@
       <h1>Classes</h1>
       <ul>
         {{#each (sort_classes inner.classes)}}
-          <li><a href="./classes/{{file_name_sanitize name}}/index.html">{{proper_noun name}}</a></li>
+          <li><a
+              href="./classes/{{file_name_sanitize name}}/index.html"
+            >{{proper_noun name}}</a></li>
         {{/each}}
       </ul>
     </div>

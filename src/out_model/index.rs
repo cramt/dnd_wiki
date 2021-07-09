@@ -3,11 +3,11 @@ use std::collections::{HashMap, HashSet};
 use std::error::Error;
 use std::ops::Deref;
 
-use crate::handlebars_engine as engine;
 use crate::out_model::class::Class;
 use crate::out_model::crs::Crs;
 use crate::out_model::spell::Spell;
 use crate::text_utils::file_name_sanitize;
+use crate::{handlebars_definitions, handlebars_engine as engine};
 use serde::{Deserialize, Serialize};
 
 use super::featlikes::Featlikes;
@@ -141,6 +141,7 @@ impl Index {
                 );
             }
         }
+        map.insert("sw.js".into(), handlebars_definitions::sw().to_string());
         Ok(map)
     }
 }

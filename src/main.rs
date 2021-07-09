@@ -135,4 +135,17 @@ fn build(in_file: PathBuf, root_dir: PathBuf, out: PathBuf) {
     let mut options = fs_extra::file::CopyOptions::new();
     options.overwrite = true;
     fs_extra::file::copy(root_dir.join(index.style), out.join("style.css"), &options).unwrap();
+    let mut options = fs_extra::dir::DirOptions::new();
+    options.depth = u64::MAX - 1;
+    let contents = fs_extra::dir::get_dir_content2(out.clone(), &options).unwrap();
+    let files = contents
+        .files
+        .into_iter()
+        .map(|x| x[(out.to_str().unwrap().len() + 1)..].to_string())
+        .map(|x| x.replace("\\", "/"))
+        .collect::<Vec<String>>();
+    File::create(out.join("files.json"))
+        .unwrap()
+        .write(serde_json::to_string(&files).unwrap().as_bytes())
+        .unwrap();
 }

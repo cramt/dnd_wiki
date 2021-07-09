@@ -12,4 +12,8 @@ macro_rules! template_export {
     }
 }
 
+pub fn sw() -> &'static str {
+    include_str!("./sw.js")
+}
+
 template_export!(class, index, spells, spell, subclass, featlikes);
