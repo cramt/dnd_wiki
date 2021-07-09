@@ -4,7 +4,7 @@ use regex::Captures;
 
 use super::regexs;
 
-pub fn list<'a>(s: &'a str) -> Cow<'a, str> {
+pub fn list(s: &str) -> Cow<str> {
     regexs::list().replace_all(s.as_ref(), |caps: &Captures| {
         format!(
             r#"<ul class="markdown">{}</ul>"#,

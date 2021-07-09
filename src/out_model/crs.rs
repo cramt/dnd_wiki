@@ -27,7 +27,7 @@ impl<T> Deref for Crs<T> {
 
     fn deref(&self) -> &Self::Target {
         let raw = self.inner as *const usize;
-        unsafe { transmute(raw) }
+        unsafe { &*(raw as *const T) }
     }
 }
 
@@ -49,7 +49,8 @@ impl<'de> Visitor<'de> for UsizeVisitor {
 
     fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E>
     where
-            E: serde::de::Error, {
+        E: serde::de::Error,
+    {
         Ok(v as usize)
     }
 }

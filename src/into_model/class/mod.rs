@@ -41,10 +41,7 @@ impl From<In> for Out {
         let (subclasses, subclass_feature) = subclasses.out(name.as_str());
         features.push(subclass_feature);
         let features = features.into_iter().fold(HashMap::new(), |mut acc, x| {
-            if !acc.contains_key(&x.level) {
-                acc.insert(x.level, Vec::new());
-            }
-            acc.get_mut(&x.level).unwrap().push(x);
+            acc.entry(x.level).or_insert_with(Vec::new).push(x);
             acc
         });
         Out {

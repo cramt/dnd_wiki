@@ -39,7 +39,7 @@ impl<'de> Visitor<'de> for PrerequisiteEntryVisitor {
         if key == "or" {
             Ok(PrerequisiteEntry::Or(
                 val.into_iter()
-                    .map(|x| PrerequisiteEntry::Leaf(x))
+                    .map(PrerequisiteEntry::Leaf)
                     .collect(),
             ))
         } else {

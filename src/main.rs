@@ -56,7 +56,7 @@ fn path_eval<S: AsRef<str>>(p: S) -> PathBuf {
 }
 
 fn main() {
-    static OPTS: Lazy<Opts> = Lazy::new(|| Opts::parse());
+    static OPTS: Lazy<Opts> = Lazy::new(Opts::parse);
     static IN_FILE: Lazy<PathBuf> = Lazy::new(|| {
         let in_file = path_eval(
             OPTS.deref()
@@ -80,9 +80,9 @@ fn main() {
             .out
             .as_ref()
             .map(path_eval)
-            .unwrap_or_else(|| ROOT_DIR.deref().join("dist").to_path_buf())
+            .unwrap_or_else(|| ROOT_DIR.deref().join("dist"))
     });
-    static WATCH: Lazy<bool> = Lazy::new(|| OPTS.deref().watch.clone());
+    static WATCH: Lazy<bool> = Lazy::new(|| OPTS.deref().watch);
     init(ROOT_DIR.as_path());
     if *WATCH.deref() {
         let (tx, rx) = std::sync::mpsc::channel();
@@ -117,7 +117,7 @@ fn main() {
 
 fn build(in_file: PathBuf, root_dir: PathBuf, out: PathBuf) {
     let index =
-        serde_yaml::from_reader::<_, Index>(fs::File::open(in_file.clone()).unwrap()).unwrap();
+        serde_yaml::from_reader::<_, Index>(fs::File::open(in_file).unwrap()).unwrap();
     let index: OutIndex = index.into();
     let finish = index.build().unwrap();
     fs_extra::dir::remove(out.as_path()).unwrap();
@@ -146,6 +146,6 @@ fn build(in_file: PathBuf, root_dir: PathBuf, out: PathBuf) {
         .collect::<Vec<String>>();
     File::create(out.join("files.json"))
         .unwrap()
-        .write(serde_json::to_string(&files).unwrap().as_bytes())
+        .write_all(serde_json::to_string(&files).unwrap().as_bytes())
         .unwrap();
 }

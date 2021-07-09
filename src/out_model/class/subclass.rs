@@ -25,7 +25,7 @@ impl GenericClass for Subclass {
     }
 
     fn start_cantrips_known(&self) -> Option<u8> {
-        self.start_cantrips_known.clone()
+        self.start_cantrips_known
     }
 
     fn features(&self) -> &HashMap<u8, Vec<Feature>> {

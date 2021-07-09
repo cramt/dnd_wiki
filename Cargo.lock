@@ -202,7 +202,7 @@ dependencies = [
 
 [[package]]
 name = "dnd_wiki"
-version = "0.1.9"
+version = "0.1.10"
 dependencies = [
  "clap",
  "crossbeam-channel",

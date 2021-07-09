@@ -47,7 +47,7 @@ pub trait GenericClass {
                 CasterType::None => 0,
             }
         } else {
-            return 0;
+            0
         }
     }
 

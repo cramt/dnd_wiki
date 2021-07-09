@@ -24,20 +24,17 @@ impl From<(In, u8)> for Out {
             .collect();
         let caster_type = caster_type.into();
         let features = features.into_iter().fold(HashMap::new(), |mut acc, x| {
-            if !acc.contains_key(&x.level) {
-                acc.insert(x.level, Vec::new());
-            }
-            acc.get_mut(&x.level).unwrap().push(x);
+            acc.entry(x.level).or_insert_with(Vec::new).push(x);
             acc
         });
         Out {
-            level,
-            class_resources,
             name,
+            level,
             flavour_text,
+            start_cantrips_known,
             features,
             caster_type,
-            start_cantrips_known,
+            class_resources,
         }
     }
 }

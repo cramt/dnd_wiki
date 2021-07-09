@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 use include_dir::{include_dir, Dir};
 use once_cell::sync::Lazy;
@@ -8,7 +7,7 @@ use once_cell::sync::Lazy;
 static REF_FILE_MAP: Lazy<HashMap<String, String>> = Lazy::new(|| {
     static REF_FILES: Dir = include_dir!("./src/handlebars_definitions/ref_files");
     let mut map = HashMap::new();
-    fn register_dir<'reg, 'a>(registry: &mut HashMap<String, String>, dir: &'a Dir) {
+    fn register_dir<'a>(registry: &mut HashMap<String, String>, dir: &'a Dir) {
         for file in dir.files() {
             let content = file.contents_utf8().unwrap().replace("\\", "/");
             let name = file.path.replace("\\", "/");

@@ -35,12 +35,16 @@ pub struct Prerequisites(pub Vec<PrerequisiteEntry>);
 
 impl Prerequisites {
     pub fn exists(&self) -> bool {
-        self.0.iter().fold(false, |acc, x| acc || x.exists())
+        self.0.iter().any(|x| x.exists())
     }
 }
 
 impl ToString for Prerequisites {
     fn to_string(&self) -> String {
-        self.0.iter().map(|x|x.to_string()).collect::<Vec<String>>().join(", ")
+        self.0
+            .iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 }
