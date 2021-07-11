@@ -1,8 +1,9 @@
 use std::collections::HashSet;
 
-use crate::handlebars_engine::deserialize_context::deserialize_context;
 use crate::handlebars_engine::render_err::render_err;
-use crate::out_model::spell::Spell;
+use crate::{
+    handlebars_engine::deserialize_context::deserialize_context, out_model::spell::Spells,
+};
 use handlebars::{HelperDef, ScopedJson};
 
 #[allow(non_camel_case_types)]
@@ -17,15 +18,14 @@ impl HelperDef for casters {
         ctx: &'rc ::handlebars::Context,
         _: &mut ::handlebars::RenderContext<'reg, 'rc>,
     ) -> Result<::handlebars::ScopedJson<'reg, 'rc>, ::handlebars::RenderError> {
-        let spells = deserialize_context::<Vec<Spell>>(ctx)?.inner;
+        let spells = deserialize_context::<Spells>(ctx)?.inner;
         let lists = spells
-            .into_iter()
-            .map(|x| x.casters)
+            .iter()
+            .map(|x| x.casters.iter().collect::<Vec<_>>())
             .flatten()
             .collect::<HashSet<_>>();
 
-        let json =
-            serde_json::value::to_value(lists).map_err(render_err)?;
+        let json = serde_json::value::to_value(lists).map_err(render_err)?;
         Ok(ScopedJson::Derived(json))
     }
 }

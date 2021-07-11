@@ -4,8 +4,8 @@ use crate::in_model::class::subclass::Subclass as In;
 use crate::out_model::class::feature::Feature;
 use crate::out_model::class::subclass::Subclass as Out;
 
-impl From<(In, u8)> for Out {
-    fn from(val: (In, u8)) -> Self {
+impl From<(In, u8, String)> for Out {
+    fn from(val: (In, u8, String)) -> Self {
         let (
             In {
                 name,
@@ -16,6 +16,7 @@ impl From<(In, u8)> for Out {
                 class_resources,
             },
             level,
+            parent_class_name,
         ) = val;
         let features: Vec<Feature> = features.into_iter().map(|x| x.into()).collect();
         let class_resources = class_resources
@@ -28,6 +29,7 @@ impl From<(In, u8)> for Out {
             acc
         });
         Out {
+            parent_class_name,
             name,
             level,
             flavour_text,

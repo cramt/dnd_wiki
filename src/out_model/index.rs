@@ -3,21 +3,21 @@ use std::collections::{HashMap, HashSet};
 use std::error::Error;
 use std::ops::Deref;
 
-use crate::out_model::class::Class;
 use crate::out_model::crs::Crs;
-use crate::out_model::spell::Spell;
 use crate::text_utils::file_name_sanitize;
 use crate::{handlebars_definitions, handlebars_engine as engine};
+use dnd_wiki_markdown::referencer::Referencer;
 use serde::{Deserialize, Serialize};
 
+use super::class::Classes;
 use super::featlikes::Featlikes;
 use super::races::Races;
-use super::references::References;
+use super::spell::Spells;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Index {
-    pub classes: Vec<Class>,
-    pub spells: Vec<Spell>,
+    pub classes: Classes,
+    pub spells: Spells,
     pub style: String,
     #[serde(rename = "static")]
     pub static_folder: String,
@@ -27,12 +27,27 @@ pub struct Index {
     pub races: Races,
 }
 
+impl Referencer for Index {
+    fn prop(&self, prop: &str) -> Option<&dyn Referencer> {
+        match prop {
+            "class" => Some(&self.classes),
+            "spells" => Some(&self.spells),
+            "feats" => Some(b"./feats.html" as &dyn Referencer),
+            _ => None,
+        }
+    }
+
+    fn value(&self) -> Cow<str> {
+        "".into()
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Metadata {
     pub name: String,
     pub path_to_parent: String,
     pub path_to_index: String,
-    pub references: Crs<References>,
+    pub index: Crs<Index>,
     pub schools: HashSet<String>,
 }
 
@@ -67,10 +82,8 @@ pub struct MetadataWrapper<T> {
 
 impl Index {
     pub fn build(&self) -> Result<HashMap<Cow<str>, String>, Box<dyn Error>> {
-        let references = References::from(self);
-        let r = Crs::new(&references);
         let metadata = Metadata {
-            references: r,
+            index: Crs::new(&self),
             name: self.name.to_string(),
             path_to_index: "./".into(),
             path_to_parent: "./index.html".into(),
@@ -101,14 +114,14 @@ impl Index {
                     .new_wrapper(self.spells.clone()),
             )?,
         );
-        for spell in &self.spells {
+        for spell in self.spells.deref() {
             map.insert(
                 format!("spells/{}.html", file_name_sanitize(spell.name.as_str())).into(),
                 engine::spell::engine()
                     .render(&metadata.clone().index("../").new_wrapper(spell.clone()))?,
             );
         }
-        for class in &self.classes {
+        for class in self.classes.deref() {
             map.insert(
                 format!(
                     "classes/{}/index.html",

@@ -1,0 +1,13 @@
+[package]
+authors = ["Alexandra Østermark <alex.cramt@gmail.com>"]
+edition = "2018"
+name = "dnd_wiki_markdown"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+once_cell = "1.8.0"
+regex = "1.5.4"
+shoulda = "0.1.12"
+thiserror = "1.0.26"

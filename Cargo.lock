@@ -206,6 +206,7 @@ version = "0.1.10"
 dependencies = [
  "clap",
  "crossbeam-channel",
+ "dnd_wiki_markdown",
  "fs_extra",
  "handlebars",
  "include_dir",
@@ -219,6 +220,16 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "shoulda",
+]
+
+[[package]]
+name = "dnd_wiki_markdown"
+version = "0.1.0"
+dependencies = [
+ "once_cell",
+ "regex 1.5.4",
+ "shoulda",
+ "thiserror",
 ]
 
 [[package]]
@@ -1035,9 +1046,9 @@ dependencies = [
 
 [[package]]
 name = "shoulda"
-version = "0.1.11"
+version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7bcc12600cc93bd99b4a31ae941af867368310e02ecac989f5d1e722c9f89ba7"
+checksum = "8d903df814c4328e8c5e05f710dd91117bf24e0c2caad70ce2651c2b710d52c5"
 dependencies = [
  "shoulda_core",
  "shoulda_macro",
@@ -1045,9 +1056,9 @@ dependencies = [
 
 [[package]]
 name = "shoulda_core"
-version = "0.1.11"
+version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1cb43314ef15dc036a6c8c1917fa5152ab7ed424d55194d4c282b1195723d2e"
+checksum = "5003b5be7e773e5b5f066c00e9c4bd298704d35fb8d582b5c05ad2fc4ad112b3"
 dependencies = [
  "const_env",
  "impl-trait-for-tuples",
@@ -1056,9 +1067,9 @@ dependencies = [
 
 [[package]]
 name = "shoulda_macro"
-version = "0.1.11"
+version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b9673eaa4cb1232ce59c884660cfc739da6224e697e217be5a30d3579e55938d"
+checksum = "b213ae5a55c2cf89272960447e9ce1d8499d180a8709ba4a732c6ee39c5a9fd0"
 dependencies = [
  "quote",
  "rustfmt",
@@ -1164,6 +1175,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "203008d98caf094106cfaba70acfed15e18ed3ddb7d94e49baec153a2b462789"
 dependencies = [
  "unicode-width",
+]
+
+[[package]]
+name = "thiserror"
+version = "1.0.26"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "93119e4feac1cbe6c798c34d3a53ea0026b0b1de6a120deef895137c0529bfe2"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.26"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "060d69a0afe7796bf42e9e2ff91f5ee691fb15c53d38b4b62a9a53eb23164745"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

@@ -19,7 +19,6 @@ pub mod handlebars_definitions;
 pub mod handlebars_engine;
 pub mod in_model;
 pub mod into_model;
-pub mod markdown;
 pub mod out_model;
 pub mod text_utils;
 

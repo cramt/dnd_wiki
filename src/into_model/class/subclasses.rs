@@ -14,7 +14,7 @@ impl In {
             entries,
             features,
         } = self;
-        let entries: Vec<Subclass> = entries.into_iter().map(|x| (x, level).into()).collect();
+        let entries: Vec<Subclass> = entries.into_iter().map(|x| (x, level, name.to_string()).into()).collect();
         let f = Feature {
             name: name.to_string(),
             level,
@@ -23,7 +23,7 @@ impl In {
                 prefix,
                 entries
                     .iter()
-                    .map(|x| format!(". [[{}={}.{}]]\r\n", proper_noun(&x.name), class_name, x.name))
+                    .map(|x| format!(". [[{}=class.{}.{}]]\r\n", proper_noun(&x.name), class_name, x.name))
                     .collect::<String>(),
                 postfix
             ),

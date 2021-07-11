@@ -1,6 +1,8 @@
 use crate::in_model::index::Index as In;
 use crate::out_model;
+use crate::out_model::class::Classes;
 use crate::out_model::index::Index as Out;
+use crate::out_model::spell::Spells;
 
 impl From<In> for Out {
     fn from(val: In) -> Self {
@@ -33,6 +35,8 @@ impl From<In> for Out {
                 x
             })
             .collect();
+        let spells = Spells(spells);
+        let classes = Classes(classes);
         let feats = (feats, "feats".to_string()).into();
         let races = races.into();
         Out {

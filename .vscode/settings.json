@@ -1,9 +1,14 @@
 {
     "emeraldwalk.runonsave": {
+        "autoClearConsole": true,
         "commands": [
             {
-                "match": "\\.(hbs|rs|yaml|js)$",
+                "match": ".*dnd_wiki[\\/\\\\]src[\\/\\\\].*\\.(hbs|rs|yaml|js)$",
                 "cmd": "cargo run -- -p dndncc"
+            },
+            {
+                "match": ".*dnd_wiki_markdown[\\/\\\\]src[\\/\\\\].*\\.rs$",
+                "cmd": "cd dnd_wiki_markdown && cargo test"
             }
         ]
     }

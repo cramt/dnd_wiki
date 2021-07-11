@@ -1,24 +1,27 @@
+mod link;
 mod list;
 mod new_line;
+pub mod referencer;
 mod regexs;
 mod style_formatting;
-mod link;
+#[cfg(test)]
+mod test;
+mod markdown_error;
 
-use std::borrow::Cow;
-
-use crate::out_model::references::References;
+use markdown_error::MarkdownError;
+use referencer::Referencer;
 
 use self::{link::link, list::list, new_line::new_line, style_formatting::style_formatting};
 
-pub fn markdown<'a, S: Into<Cow<'a, str>>>(s: S, r: &'a References) -> String {
-    let s: Cow<str> = s.into();
-    let s = s.trim();
+pub fn markdown<S: AsRef<str>, R: Referencer>(s: S, r: R) -> Result<String, MarkdownError> {
+    let s = s.as_ref().trim();
     let s = list(s);
     let s = new_line(s.as_ref());
-    let s = link(s.as_ref(), r).unwrap();
-    style_formatting(s.as_ref())
+    let s = link(s.as_ref(), &r)?;
+    Ok(style_formatting(s.as_ref()))
 }
 
+/*
 #[cfg(test)]
 mod test {
     use shoulda::Shoulda;
@@ -109,3 +112,4 @@ c
         .eq("a<br>b<br>c".to_string());
     }
 }
+*/

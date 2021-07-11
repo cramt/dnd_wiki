@@ -1,6 +1,8 @@
+use std::ops::Deref;
+
 use handlebars::{Context, Handlebars, Helper, HelperResult, Output, RenderContext, RenderError};
 
-use crate::{handlebars_engine::deserialize_context::deserialize_metadata, markdown};
+use crate::handlebars_engine::deserialize_context::deserialize_metadata;
 
 pub fn markdown(
     h: &Helper,
@@ -16,7 +18,8 @@ pub fn markdown(
         .as_str()
         .ok_or_else(|| RenderError::new("param not found"))?;
     let metadata = deserialize_metadata(ctx)?;
-    let str = markdown::markdown(str, &metadata.references);
+    let str = dnd_wiki_markdown::markdown(str, metadata.index.deref())
+        .map_err(|e| RenderError::new(e.to_string()))?;
     out.write(str.as_str())?;
     Ok(())
 }
