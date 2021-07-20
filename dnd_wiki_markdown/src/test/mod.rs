@@ -13,9 +13,7 @@ mod hashmap_referencer;
 fn all_text_bold() {
     markdown("**damn, this is bold**", EmptyReferencer)
         .should()
-        .eq(Ok(
-            "<span class=\"bold\">damn, this is bold</span>".to_string(),
-        ));
+        .eq(Ok("<p><strong>damn, this is bold</strong></p>".to_string()));
 }
 
 #[test]
@@ -23,15 +21,15 @@ fn inner_text_bold() {
     markdown("yo **bold** it be", EmptyReferencer)
         .should()
         .eq(Ok(
-            "yo <span class=\"bold\">bold</span> it be".to_string(),
+            "<p>yo <strong>bold</strong> it be</p>".to_string()
         ));
 }
 
 #[test]
 fn all_text_italic() {
-    markdown("*damn, italy*", EmptyReferencer).should().eq(Ok(
-        "<span class=\"italic\">damn, italy</span>".to_string(),
-    ));
+    markdown("*damn, italy*", EmptyReferencer)
+        .should()
+        .eq(Ok("<p><em>damn, italy</em></p>".to_string()));
 }
 
 #[test]
@@ -39,7 +37,7 @@ fn inner_text_italic() {
     markdown("some *wild* shit", EmptyReferencer)
         .should()
         .eq(Ok(
-            "some <span class=\"italic\">wild</span> shit".to_string(),
+            "<p>some <em>wild</em> shit</p>".to_string()
         ));
 }
 
@@ -47,7 +45,7 @@ fn inner_text_italic() {
 fn all_text_italic_and_bold() {
     markdown("***AAA***", EmptyReferencer)
         .should()
-        .eq(Ok("<span class=\"italic bold\">AAA</span>".to_string()));
+        .eq(Ok("<p><em><strong>AAA</strong></em></p>".to_string()));
 }
 
 #[test]
@@ -55,7 +53,7 @@ fn inner_text_italic_and_bold() {
     markdown("bruh, ***IDFK*** anymore", EmptyReferencer)
         .should()
         .eq(Ok(
-            "bruh, <span class=\"italic bold\">IDFK</span> anymore".to_string(),
+            "<p>bruh, <em><strong>IDFK</strong></em> anymore</p>".to_string()
         ));
 }
 
@@ -63,30 +61,37 @@ fn inner_text_italic_and_bold() {
 fn all_text_list() {
     markdown(
         "
-. First things first
-. I'ma say all the words inside my head
-. I'm fired up and tired of
-. The way that things have been, oh-ooh
-. The way that things have been, oh-ooh
+- First things first
+- I'ma say all the words inside my head
+- I'm fired up and tired of
+- The way that things have been, oh-ooh
+- The way that things have been, oh-ooh
     ",
         EmptyReferencer,
     )
     .should()
     .eq(Ok(
-        "<ul class=\"markdown\"><li class=\"markdown\">First things first</li><li class=\"markdown\">I\'ma say all the words inside my head</li><li class=\"markdown\">I\'m fired up and tired of</li><li class=\"markdown\">The way that things have been, oh-ooh</li><li class=\"markdown\">The way that things have been, oh-ooh</li></ul>"
+        "<ul>\r\n<li>First things first</li>\r\n<li>I\'ma say all the words inside my head</li>\r\n<li>I\'m fired up and tired of</li>\r\n<li>The way that things have been, oh-ooh</li>\r\n<li>The way that things have been, oh-ooh</li>\r\n</ul>"
             .to_string(),
     ));
 }
 
 #[test]
 fn inner_text_list() {
-    markdown("
+    markdown(
+        "
 things that are cool
-. you
-. me
-. other things
+- you
+- me
+- other things
 bye
-    ", EmptyReferencer).should().eq(Ok("things that are cool<ul class=\"markdown\"><li class=\"markdown\">you</li><li class=\"markdown\">me</li><li class=\"markdown\">other things</li></ul><br>bye".to_string()));
+    ",
+        EmptyReferencer,
+    )
+    .should()
+    .eq(Ok(
+        "<p>things that are cool</p>\r\n<ul>\r\n<li>you</li>\r\n<li>me</li>\r\n<li>other things\r\nbye</li>\r\n</ul>".to_string(),
+    ));
 }
 
 #[test]
@@ -99,33 +104,41 @@ new line
         EmptyReferencer,
     )
     .should()
-    .eq(Ok("yoo<br>new line".to_string()));
+    .eq(Ok("<p>yoo\r\nnew line</p>".to_string()));
 }
 
 #[test]
 fn list_and_newline() {
-    markdown("
+    markdown(
+        "
 yoo
 hello
-. list time
-. aaa
-    ", EmptyReferencer).should().eq(Ok("yoo<br>hello<ul class=\"markdown\"><li class=\"markdown\">list time</li><li class=\"markdown\">aaa</li></ul>".to_string()));
+- list time
+- aaa
+    ",
+        EmptyReferencer,
+    )
+    .should()
+    .eq(Ok("<p>yoo\r\nhello</p>\r\n<ul>\r\n<li>list time</li>\r\n<li>aaa</li>\r\n</ul>".to_string()));
 }
 
 #[test]
 fn references() {
     let r = HashMapReferencer {
         value: "".to_string(),
-        children: vec![
-            ("me".to_string(),
+        children: vec![(
+            "me".to_string(),
             HashMapReferencer {
                 value: "things".to_string(),
                 children: HashMap::new(),
-            }),
-        ]
+            },
+        )]
         .into_iter()
         .collect(),
     };
 
-    markdown("[[Me=me]]", r).should().be().eq(Ok("<a class=\"markdown\" href=\"./things\">Me</a>".to_string()));
+    markdown("[Me](me)", r)
+        .should()
+        .be()
+        .eq(Ok("<p><a href=\"things\">Me</a></p>".to_string()));
 }

@@ -1,3 +1,5 @@
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
+
 use crate::in_model::class::subclasses::Subclasses as In;
 use crate::out_model::class::feature::Feature;
 use crate::out_model::class::subclass::Subclass;
@@ -14,16 +16,28 @@ impl In {
             entries,
             features,
         } = self;
-        let entries: Vec<Subclass> = entries.into_iter().map(|x| (x, level, name.to_string()).into()).collect();
+        let entries: Vec<Subclass> = entries
+            .into_iter()
+            .map(|x| (x, level, class_name.to_string()).into())
+            .collect();
         let f = Feature {
             name: name.to_string(),
             level,
             body: format!(
-                "{}\r\n{}{}",
+                "{}\r\n{}\r\n{}",
                 prefix,
                 entries
                     .iter()
-                    .map(|x| format!(". [[{}=class.{}.{}]]\r\n", proper_noun(&x.name), class_name, x.name))
+                    .map(|x| {
+                        format!(
+                            "- [{}]({})\r\n",
+                            proper_noun(&x.name),
+                            utf8_percent_encode(
+                                format!("class.{}.{}", class_name, x.name).as_str(),
+                                NON_ALPHANUMERIC
+                            )
+                        )
+                    })
                     .collect::<String>(),
                 postfix
             ),

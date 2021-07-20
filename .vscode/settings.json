@@ -11,5 +11,6 @@
                 "cmd": "cd dnd_wiki_markdown && cargo test"
             }
         ]
-    }
+    },
+    "files.eol": "\r\n"
 }

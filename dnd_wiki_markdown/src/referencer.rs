@@ -1,4 +1,4 @@
-use std::{borrow::Cow,  str::from_utf8};
+use std::{borrow::Cow, str::from_utf8_unchecked};
 
 pub trait Referencer {
     fn prop(&self, prop: &str) -> Option<&dyn Referencer>;
@@ -15,8 +15,10 @@ pub trait Referencer {
     }
 }
 
-
-impl<T> Referencer for &T where T: Referencer {
+impl<T> Referencer for &T
+where
+    T: Referencer,
+{
     fn prop(&self, prop: &str) -> Option<&dyn Referencer> {
         T::prop(&self, prop)
     }
@@ -32,6 +34,6 @@ impl<const N: usize> Referencer for [u8; N] {
     }
 
     fn value(&self) -> Cow<str> {
-        from_utf8(self).unwrap().into()
+        unsafe { from_utf8_unchecked(self) }.into()
     }
 }
