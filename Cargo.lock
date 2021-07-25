@@ -202,7 +202,7 @@ dependencies = [
 
 [[package]]
 name = "dnd_wiki"
-version = "0.1.10"
+version = "0.1.11"
 dependencies = [
  "clap",
  "crossbeam-channel",
@@ -225,7 +225,7 @@ dependencies = [
 
 [[package]]
 name = "dnd_wiki_markdown"
-version = "0.1.0"
+version = "0.1.11"
 dependencies = [
  "once_cell",
  "percent-encoding",
