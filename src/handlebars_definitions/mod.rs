@@ -16,4 +16,4 @@ pub fn sw() -> &'static str {
     include_str!("./sw.js")
 }
 
-template_export!(class, index, spells, spell, subclass, featlikes, races);
+template_export!(class, index, spells, spell, subclass, featlikes, races, race);

@@ -220,6 +220,7 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "shoulda",
+ "thiserror",
 ]
 
 [[package]]

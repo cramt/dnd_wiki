@@ -99,8 +99,8 @@ impl Index {
             engine::feats::engine().render(
                 &metadata
                     .clone()
-                    .index("../")
-                    .parent("../index.html")
+                    .index("./")
+                    .parent("./index.html")
                     .new_wrapper(self.feats.clone()),
             )?,
         );
@@ -158,11 +158,24 @@ impl Index {
             "races/index.html".into(),
             engine::races::engine().render(
                 &metadata
+                    .clone()
                     .index("../")
                     .parent("../index.html")
                     .new_wrapper(self.races.clone()),
             )?,
         );
+        for race in self.races.0.iter().flat_map(|(_, (_, x))| x) {
+            map.insert(
+                format!("races/{}.html", file_name_sanitize(&race.name)).into(),
+                engine::race::engine().render(
+                    &metadata
+                        .clone()
+                        .index("../")
+                        .parent("./index.html")
+                        .new_wrapper(race.clone()),
+                )?,
+            );
+        }
         map.insert("sw.js".into(), handlebars_definitions::sw().to_string());
         Ok(map)
     }

@@ -6,7 +6,7 @@
     <script>
       navigator.serviceWorker.register('{{metadata.path_to_index}}sw.js');
     </script>
-    <title>Races</title>
+    <title>{{proper_noun inner.name}}</title>
   </head>
 
   <body>
@@ -18,12 +18,20 @@
           🠔
         </a>
       </h1>
-      {{#each inner}}
-        <h2>{{proper_noun @key}}</h2>
-        <p>{{lookup this 0}}</p>
+      <h1>{{proper_noun inner.name}}</h1>
+      <p>{{inner.flavor_text}}</p>
+      <h2>{{proper_noun inner.name}} Features</h2>
+      <ul>
+      {{#each inner.features}}
+        <li><strong>{{@key}}.</strong> {{markdown this true}}</li>
+      {{/each}}
+      </ul>
+      {{#each inner.subraces}}
+        <h2>{{proper_noun name}}</h2>
+        <p>{{flavor_text}}</p>
         <ul>
-          {{#each (lookup this 1)}}
-            <li><a href="./{{file_name_sanitize name}}.html">{{proper_noun name}}</a></li>
+          {{#each features}}
+            <li><strong>{{@key}}.</strong> {{markdown this true}}</li>
           {{/each}}
         </ul>
       {{/each}}

@@ -10,8 +10,12 @@ pub fn init<P: Into<PathBuf>>(p: P) {
     *curr = p.into()
 }
 
-pub fn open_new<S: AsRef<str>>(s: S) -> File {
+pub fn join<S: AsRef<str>>(s: S) -> PathBuf {
     let curr = CURRENT_FILE.lock().unwrap();
-    let path = curr.join(s.as_ref());
+    curr.join(s.as_ref())
+}
+
+pub fn open_new<S: AsRef<str>>(s: S) -> File {
+    let path = join(s);
     File::open(path).unwrap()
 }

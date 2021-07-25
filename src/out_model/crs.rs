@@ -1,11 +1,17 @@
-use std::{intrinsics::transmute, marker::PhantomData, ops::Deref};
+use std::{fmt::Debug, intrinsics::transmute, marker::PhantomData, ops::Deref};
 
 use serde::{de::Visitor, Deserialize, Deserializer, Serialize};
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug)]
 pub struct Crs<T> {
     inner: usize,
     t: PhantomData<T>,
+}
+
+impl<T> Clone for Crs<T> {
+    fn clone(&self) -> Self {
+        Self::inner_new(self.inner)
+    }
 }
 
 impl<T> Crs<T> {
