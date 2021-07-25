@@ -1,7 +1,14 @@
 [package]
 authors = ["Alexandra Østermark <alex.cramt@gmail.com>"]
+categories = ["command-line-utilities"]
+description = "a tool for creating wikis for dnd 5e"
 edition = "2018"
+homepage = "https://github.com/cramt/dnd_wiki"
+keywords = ["dnd", "wiki"]
+license = "MIT"
 name = "dnd_wiki_markdown"
+readme = "README.md"
+repository = "https://github.com/cramt/dnd_wiki"
 version = "0.1.11"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
