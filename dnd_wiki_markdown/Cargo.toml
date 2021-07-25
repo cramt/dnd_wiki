@@ -7,7 +7,7 @@ homepage = "https://github.com/cramt/dnd_wiki"
 keywords = ["dnd", "wiki"]
 license = "MIT"
 name = "dnd_wiki_markdown"
-readme = "README.md"
+readme = "../README.md"
 repository = "https://github.com/cramt/dnd_wiki"
 version = "0.1.11"
 
