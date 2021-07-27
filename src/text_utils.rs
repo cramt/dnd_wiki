@@ -48,7 +48,7 @@ pub fn class_name_sanitize<S: AsRef<str>>(s: S) -> String{
 }
 
 pub fn proper_noun<S: AsRef<str>>(s: S) -> String {
-    static REGEX: Lazy<Regex> = Lazy::new(||Regex::new(r"(?:^|[^a-zA-Z1-9])[a-zA-Z1-9]").unwrap());
+    static REGEX: Lazy<Regex> = Lazy::new(||Regex::new(r"(?:^|\-|/|\s)\w").unwrap());
     REGEX.replace_all(s.as_ref(), |caps: &Captures| {
         caps[0].to_uppercase()
     }).into()
