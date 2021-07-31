@@ -20,10 +20,14 @@
       </h1>
       {{#each inner}}
         <h2>{{proper_noun @key}}</h2>
-        <p>{{lookup this 0}}</p>
+        {{#if (lookup this 0)}}
+          {{markdown (lookup this 0)}}
+        {{/if}}
         <ul>
           {{#each (lookup this 1)}}
-            <li><a href="./{{file_name_sanitize name}}.html">{{proper_noun name}}</a></li>
+            <li><a href="./{{file_name_sanitize name}}.html">{{proper_noun
+                  name
+                }}</a></li>
           {{/each}}
         </ul>
       {{/each}}

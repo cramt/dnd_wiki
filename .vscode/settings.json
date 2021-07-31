@@ -7,6 +7,10 @@
                 "cmd": "cargo run -- -p dndncc"
             },
             {
+                "match": ".*\\.yaml",
+                "cmd": "cargo run -- -p dndncc"
+            },
+            {
                 "match": ".*dnd_wiki_markdown[\\/\\\\]src[\\/\\\\].*\\.rs$",
                 "cmd": "cd dnd_wiki_markdown && cargo test"
             }
