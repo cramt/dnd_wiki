@@ -27,9 +27,13 @@ impl From<In> for Out {
             body,
             sections,
         } = val;
+        let initial_level = level.iter().min_by(|a, b| a.cmp(b)).copied().unwrap_or(1);
+        let relevant_levels = level;
         let sections = sections.into_iter().map(|f| f.into()).collect();
+
         Out {
-            level,
+            initial_level,
+            relevant_levels,
             name,
             body,
             sections,

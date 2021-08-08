@@ -1,8 +1,10 @@
 use serde::{Deserialize, Serialize};
+use crate::in_model::vec_or_single_element::vec_or_single_element;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Feature {
-    pub level: u8,
+    #[serde(deserialize_with = "vec_or_single_element")]
+    pub level: Vec<u8>,
     pub name: String,
     pub body: String,
     #[serde(default)]

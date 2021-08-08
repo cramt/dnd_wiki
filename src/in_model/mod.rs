@@ -7,3 +7,4 @@ pub mod spell;
 #[cfg(test)]
 pub mod test;
 pub mod vec_of_path_or_struct;
+pub mod vec_or_single_element;

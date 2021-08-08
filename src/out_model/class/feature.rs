@@ -2,7 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Feature {
-    pub level: u8,
+    pub initial_level: u8,
+    pub relevant_levels: Vec<u8>,
     pub name: String,
     pub body: String,
     pub sections: Vec<Section>,

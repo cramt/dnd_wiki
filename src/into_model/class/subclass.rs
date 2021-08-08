@@ -25,7 +25,7 @@ impl From<(In, u8, String)> for Out {
             .collect();
         let caster_type = caster_type.into();
         let features = features.into_iter().fold(HashMap::new(), |mut acc, x| {
-            acc.entry(x.level).or_insert_with(Vec::new).push(x);
+            acc.entry(x.initial_level).or_insert_with(Vec::new).push(x);
             acc
         });
         Out {

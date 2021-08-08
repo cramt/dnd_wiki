@@ -22,7 +22,8 @@ impl In {
             .collect();
         let f = Feature {
             name: name.to_string(),
-            level,
+            initial_level: level,
+            relevant_levels: features.clone(),
             body: format!(
                 "{}\r\n{}\r\n{}",
                 prefix,

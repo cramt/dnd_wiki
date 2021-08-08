@@ -22,8 +22,7 @@ impl HelperDef for features_at_level {
             .value()
             .as_i64()
             .ok_or_else(|| RenderError::new("not i64"))? as u8;
-        let or = Vec::new();
-        let features = class.features.get(&level).unwrap_or(&or);
+        let features = class.features.into_iter().flat_map(|(_, x)|x).filter(|x|x.relevant_levels.contains(&level)).collect::<Vec<_>>();
         let json =
             serde_json::value::to_value(features).map_err(|x| RenderError::new(x.to_string()))?;
         Ok(ScopedJson::Derived(json))
